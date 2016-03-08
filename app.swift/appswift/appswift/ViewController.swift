@@ -10,12 +10,24 @@ import UIKit
 import TwitterKit
 
 class ViewController: UIViewController {
-
+    
+    @IBOutlet weak var LoginUserName: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if let _ = Twitter.sharedInstance().sessionStore.session() {
             
+            let session = Twitter.sharedInstance().sessionStore.session()
+            let client = TWTRAPIClient(userID: session!.userID)
+            
+            client.loadUserWithID(session!.userID) { (user, error) -> Void in
+                if let user = user {
+                    
+                    self.LoginUserName.text = "Bienvenue @\(user.screenName)"
+                    
+                }
+            }
             
         } else {
         
@@ -40,6 +52,7 @@ class ViewController: UIViewController {
         }
         // Do any additional setup after loading the view, typically from a nib.
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -54,8 +67,8 @@ class ViewController: UIViewController {
             
             let composer = TWTRComposer()
             
-            composer.setText("just setting up my Fabric")
-            composer.setImage(UIImage(named: "fabric"))
+            composer.setText("just tweet from my #swift App")
+            //composer.setImage(UIImage(named: "fabric"))
             
             // Called from a UIViewController
             composer.showFromViewController(self) { result in
@@ -93,6 +106,7 @@ class TimelineController : TWTRTimelineViewController  {
         
         //let client = TWTRAPIClient()
         self.dataSource = TWTRUserTimelineDataSource(screenName: "EdwinnSsOff", APIClient: client)
+        
         
         self.showTweetActions = true
         

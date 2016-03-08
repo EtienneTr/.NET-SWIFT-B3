@@ -18,6 +18,7 @@
 		F17ABC121C8DBAC300D25E7B /* TwitterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F17ABC0E1C8DBAC300D25E7B /* TwitterKit.framework */; };
 		F17ABC131C8DBAC300D25E7B /* TwitterKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F17ABC0F1C8DBAC300D25E7B /* TwitterKitResources.bundle */; };
 		F17ABC141C8DBAC300D25E7B /* TwitterCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F17ABC101C8DBAC300D25E7B /* TwitterCore.framework */; };
+		F1B5154D1C8F292200396C9A /* UserClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B5154C1C8F292200396C9A /* UserClass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		F17ABC0E1C8DBAC300D25E7B /* TwitterKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TwitterKit.framework; sourceTree = "<group>"; };
 		F17ABC0F1C8DBAC300D25E7B /* TwitterKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = TwitterKitResources.bundle; path = TwitterKit.framework/Versions/A/Resources/TwitterKitResources.bundle; sourceTree = "<group>"; };
 		F17ABC101C8DBAC300D25E7B /* TwitterCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TwitterCore.framework; sourceTree = "<group>"; };
+		F1B5154C1C8F292200396C9A /* UserClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserClass.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +120,7 @@
 				F16A8C191C8D832500B67EC5 /* Assets.xcassets */,
 				F16A8C1B1C8D832500B67EC5 /* LaunchScreen.storyboard */,
 				F16A8C1E1C8D832500B67EC5 /* Info.plist */,
+				F1B5154C1C8F292200396C9A /* UserClass.swift */,
 			);
 			path = appswift;
 			sourceTree = "<group>";
@@ -291,6 +294,7 @@
 			files = (
 				F16A8C151C8D832500B67EC5 /* ViewController.swift in Sources */,
 				F16A8C131C8D832500B67EC5 /* AppDelegate.swift in Sources */,
+				F1B5154D1C8F292200396C9A /* UserClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
