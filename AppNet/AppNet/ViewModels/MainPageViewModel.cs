@@ -9,6 +9,10 @@ namespace AppNet.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
+    	
+
+
+
     }
 }
 
