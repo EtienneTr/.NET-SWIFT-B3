@@ -9,6 +9,8 @@
 import UIKit
 import TwitterKit
 
+var UserLog = User()
+
 class ViewController: UIViewController {
     
     @IBOutlet weak var LoginUserName: UILabel!
@@ -25,7 +27,8 @@ class ViewController: UIViewController {
                 if let user = user {
                     
                     self.LoginUserName.text = "Bienvenue @\(user.screenName)"
-                    
+                    UserLog.Name = user.screenName
+                    UserLog.ImageURL = user.profileImageURL
                 }
             }
             
@@ -40,6 +43,9 @@ class ViewController: UIViewController {
                     )
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
                     self.presentViewController(alert, animated: true, completion: nil)
+                    
+                    UserLog.Name = unwrappedSession.userName
+                    
                 } else {
                     NSLog("Login error: %@", error!.localizedDescription);
                 }
@@ -96,25 +102,35 @@ class ViewController: UIViewController {
 
 }
 
-class TimelineController : TWTRTimelineViewController  {
+class TimelineController : UITableViewController, TWTRTweetViewDelegate {
+    
+    
+    var tweetData : [AnyObject] = []
+    let tweetTableReuseIdentifier = "TweetCell"
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-
+        //super.viewDidLoad()
+        // Setup the table view
+        tableView.estimatedRowHeight = 150
+        tableView.rowHeight = UITableViewAutomaticDimension // Explicitly set on iOS 8 if using automatic row height calculation
+        tableView.allowsSelection = false
+        tableView.registerClass(TWTRTweetTableViewCell.self, forCellReuseIdentifier: tweetTableReuseIdentifier)
+        
+        
         let store = Twitter.sharedInstance().sessionStore
         let client = TWTRAPIClient(userID: store.session()?.userID)
         
         //let client = TWTRAPIClient()
-        self.dataSource = TWTRUserTimelineDataSource(screenName: "EdwinnSsOff", APIClient: client)
+        /*let dataSrc = TWTRUserTimelineDataSource(screenName: UserLog.Name, APIClient: client)
+        self.dataSource = dataSrc
         
+        self.showTweetActions = true*/
         
-        self.showTweetActions = true
-        
-        /*let statusesShowEndpoint = "https://api.twitter.com/1.1/statuses/user_timeline.json"
-        let params = ["id": "20"]
+        let statusesShowEndpoint = "https://api.twitter.com/1.1/statuses/user_timeline.json"
+        let params = ["user_id": store.session()!.userID]
         var clientError : NSError?
         
-        let request = Twitter.sharedInstance().APIClient.URLRequestWithMethod("GET", URL: statusesShowEndpoint, parameters: params, error: &clientError)
+        let request = client.URLRequestWithMethod("GET", URL: statusesShowEndpoint, parameters: params, error: &clientError)
         if (clientError == nil) {
             
             client.sendTwitterRequest(request) { (response, data, connectionError) -> Void in
@@ -122,15 +138,72 @@ class TimelineController : TWTRTimelineViewController  {
                     var jsonError : NSError?
                     do {
                         let json : AnyObject? = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions())
+                        self.tweetData = TWTRTweet.tweetsWithJSONArray(json as! [AnyObject])
+                        
+                        self.tableView.reloadData()
+                        print(self.tweetData)
                     } catch {
                         jsonError = nil
                     }
                 }
             }
             
-        }*/
+        }
+        
+        
 
     }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.tweetData.count
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let tweet = self.tweetData[indexPath.row]
+        let cell = tableView.dequeueReusableCellWithIdentifier(tweetTableReuseIdentifier, forIndexPath: indexPath) as! TWTRTweetTableViewCell
+        cell.configureWithTweet(tweet as! TWTRTweet)
+        cell.tweetView.delegate = self
+        
+        return cell
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let tweet = self.tweetData[indexPath.row]
+        return TWTRTweetTableViewCell.heightForTweet(tweet as! TWTRTweet, width: CGRectGetWidth(self.view.bounds))
+    }
 
+    /*override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "User"
+    }**/
+    
+    /*override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        // Here, we use NSFetchedResultsController
+        // And we simply use the section name as title
+        //let currSection = fetchedResultsController.sections?[section]
+        //let title = currSection!.name
+        
+        // Dequeue with the reuse identifier
+        let cell = self.tableView.dequeueReusableHeaderFooterViewWithIdentifier("TableSectionHeader")
+        //let header = cell as! TableSectionHeader
+        header.titleLabel.text = title
+        
+        return cell
+    }*/
+    
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerCell = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! CustomHeaderCell
+        //headerCell.backgroundColor = UIColor.cyanColor()
+        headerCell.headerLabel.text = UserLog.Name
+        
+        let url = NSURL(string: UserLog.ImageURL)
+        let data = NSData(contentsOfURL: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check
+        headerCell.backgroundView = UIImageView(image: UIImage(data: data!))
+        
+        
+        return headerCell
+    }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 80
+    }
 }
-

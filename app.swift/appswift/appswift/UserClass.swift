@@ -10,8 +10,10 @@ import Foundation
 
 class User {
     var Name : String
+    var ImageURL : String
     
     init(){
         self.Name = "Guest"
+        self.ImageURL = ""
     }
 }
