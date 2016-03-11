@@ -10,23 +10,7 @@ namespace AppNet.ViewModels
     public class MainPageViewModel : ViewModelBase
     {
     	
-    	var loggedUser = User.GetLoggedUser(userCredentials);
-    	var homeTimeline = loggedUser.GetHomeTimeline();
 
-    	private RelayCommand _Connexion;
-
-        public RelayCommand Connexion
-        {
-            get
-            {
-                if (_Connexion == null)
-                {
-                    _Connexion = new RelayCommand(SetInputToOutput);
-                }
-                return _sentText;
-            }
-
-        }
 
 
 

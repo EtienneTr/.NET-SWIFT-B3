@@ -8,51 +8,65 @@ namespace AppNet.Views
 {
     public sealed partial class MainPage : Page
     {
-    	
-    	const string ConsumerKey = "HDtWgQ90KCQUgfF8yhpQLxj5U";
-        const string ConsumerSecret = "J4yg5hVrlvCocWoT4lWCqQXvaZ7C5YAfw9wgGZwZF5YuFY46Up";
-        const string AccessToken = "821562258-vZAwbc55MA8CHwRvRD1026GqeHhtAK2fwwPzYNFh";
-        const string AccessTokenSecret = "WdJk9pVfLIzWyvUpac5k3AHyt4AY01x9EL4MRVn6lPqMk";
 
         public MainPage()
         {
             InitializeComponent();
-            InitTwitterCredentials();
+            this.Loaded += OAuthPage_Loaded;
+    		OAuthWebBrowser.LoadCompleted += OAuthWebBrowser_LoadCompleted;
         }
-        private static void InitTwitterCredentials()
-        {
-            var creds = new TwitterCredentials(AccessToken, AccessTokenSecret, ConsumerKey, ConsumerSecret);
-            Auth.SetUserCredentials(ConsumerKey, ConsumerSecret, AccessToken, AccessTokenSecret);
-            Auth.ApplicationCredentials = creds;
-        }
+        
+    	void TweetButton_Click(object sender, RoutedEventArgs e)
+		{
+    		PinAuthorizer auth = null;
+    		if (SuspensionManager.SessionState.ContainsKey("Authorizer"))
+    		{
+        		auth = SuspensionManager.SessionState["Authorizer"] as PinAuthorizer; 
+    		}
+ 
+    		if (auth == null || !auth.IsAuthorized)
+    		{
+        		Frame.Navigate(typeof(Views.LoggedUserView));
+        		return;
+    		}
 
-        private void ButtonSendTweet_Click(object sender, RoutedEventArgs e)
+		}
+    	
+    	void OAuthPage_Loaded(object sender, EventArgs e)
         {
-            PublishTweet();
-        }
 
-        public static async void PublishTweet(string text, string imageUrl)
-        {
-            var response = await WebRequest.Create(imageUrl).GetResponseAsync();
-            var allBytes = new List<byte>();
-            using (var imageStream = response.GetResponseStream())
+            // disable once ConvertToConstant.Local
+            var oauth_consumer_key = "HDtWgQ90KCQUgfF8yhpQLxj5U";
+            // disable once ConvertToConstant.Local
+            var oauth_consumer_secret = "J4yg5hVrlvCocWoT4lWCqQXvaZ7C5YAfw9wgGZwZF5YuFY46Up";
+
+            if (Request["oauth_token"] == null)
             {
-                // disable once SuggestUseVarKeywordEvident
-                byte[] buffer = new byte[4000];
-                int bytesRead;
-                while ((bytesRead = await imageStream.ReadAsync(buffer, 0, 4000)) > 0)
-                {
-                    allBytes.AddRange(buffer.Take(bytesRead));
-                }
+                OAuthTokenResponse reqToken = OAuthUtility.GetRequestToken(oauth_consumer_key,oauth_consumer_secret,
+                    Request.Url.AbsoluteUri);
+                Response.Redirect(string.Format("http://twitter.com/oauth/authorize?oauth_token={0}",
+                    reqToken.Token));
             }
-            var media = Upload.UploadBinary(allBytes.ToArray());
-            Tweet.PublishTweet(text, new PublishTweetOptionalParameters
+            else
             {
-                Medias = new List<IMedia> { media }
-            });
-        }
-        
-        
+                string requestToken = Request["oauth_token"].ToString();
+                string pin = Request["oauth_verifier"].ToString();
+                var tokens = OAuthUtility.GetAccessToken(
+                    oauth_consumer_key,
+                    oauth_consumer_secret,
+                    requestToken,
+                    pin);
+                // disable once SuggestUseVarKeywordEvident
+                OAuthTokens accesstoken = new OAuthTokens()
+                {
+                    AccessToken = tokens.Token,
+                    AccessTokenSecret = tokens.TokenSecret,
+                    ConsumerKey = oauth_consumer_key,
+                    ConsumerSecret = oauth_consumer_secret
+                };
 
+            }
+
+        }
     }
 }
