@@ -57,7 +57,8 @@
 					VerticalAlignment="Center" />
 				<Button
 					x:Name="TweetButton"
-					Content="Tweet" />
+					Content="Tweet"
+					Click="TweetButton_Click"/>
 			</StackPanel>
 		</StackPanel>
 		<!--ContentPanel - place additional content here-->

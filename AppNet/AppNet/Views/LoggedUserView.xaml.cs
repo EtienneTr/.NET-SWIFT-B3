@@ -45,5 +45,27 @@ namespace AppNet.Views
     		}
 
 		}
+    	
+    	void TweetButton_Click(object sender, RoutedEventArgs e)
+    	{
+    		PinAuthorizer auth = null;
+ 
+		    if (SuspensionManager.SessionState.ContainsKey("Authorizer"))
+		    {
+		        auth = SuspensionManager.SessionState["Authorizer"] as PinAuthorizer; 
+		    }
+		 
+		    if (auth == null || !auth.IsAuthorized)
+		    {
+		        Frame.Navigate(typeof(OAuthPage));
+		        return;
+		    }
+		 
+		    var twitterCtx = new TwitterContext(auth);
+		 
+		    Status tweet = twitterCtx.UpdateStatus(<span class="skimlinks-unlinked">TweetTextBox.Text</span>);
+
+    	
+    	}
 	}
 }
