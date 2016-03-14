@@ -10,22 +10,20 @@ import UIKit
 import TwitterKit
 
 var UserLog = User()
+var Args : String = ""
 
 class ViewController: UIViewController {
     
     
     @IBOutlet var LoginUserName: UILabel!
     @IBOutlet var LabelsView: UIView!
-    @IBOutlet var ScreenNameUser: UILabel!
-    
+    @IBOutlet var ScreenNameUser: UIButton!
     
     @IBOutlet var UserImageParent: UIView!
     @IBOutlet var UserImage: UIImageView!
     
     @IBOutlet var LogoutButton: UIButton!
     @IBOutlet var UserView: UIStackView!
-    
-    
     
     
     override func viewDidLoad() {
@@ -51,12 +49,13 @@ class ViewController: UIViewController {
                 }
             }
         }
+        
     }
     
     func updateInterface(){
         
         self.LoginUserName.text = "Bienvenue \(UserLog.Name)"
-        self.ScreenNameUser.text = "@\(UserLog.ScreenName)"
+        self.ScreenNameUser.setTitle("@\(UserLog.ScreenName)", forState: .Normal)
         
         let url = NSURL(string: UserLog.ImageURL)
         if let data = NSData(contentsOfURL: url!) {
@@ -179,6 +178,7 @@ class ViewController: UIViewController {
         }
     }
     
+    //MARK: Actions
     @IBAction func LogoutAction(sender: AnyObject) {
         
         let store = Twitter.sharedInstance().sessionStore
@@ -190,6 +190,11 @@ class ViewController: UIViewController {
         GotoConnectionController()
     }
     
+    @IBAction func HomeTLAction(sender: AnyObject) {
+        Args = "user"
+        GotoTimeLineController()
+    }
+    
     func GotoConnectionController() {
         
         let loginViewController = self.storyboard!.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
@@ -197,5 +202,12 @@ class ViewController: UIViewController {
         self.navigationController!.pushViewController(loginViewController, animated: true)
     }
     
-
+    func GotoTimeLineController() {
+        
+        let loginViewController = self.storyboard!.instantiateViewControllerWithIdentifier("TimelineController") as! TimelineController
+        
+        self.navigationController!.pushViewController(loginViewController, animated: true)
+    }
+    
 }
+

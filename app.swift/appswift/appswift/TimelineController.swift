@@ -56,7 +56,12 @@ class TimelineController : UITableViewController, TWTRTweetViewDelegate {
             }
             
         }*/
-        getTimeLine("home")
+        if Args == "user"{
+            getTimeLine("user")
+            Args = ""
+        } else {
+            getTimeLine("home")
+        }
         
     }
     
@@ -96,24 +101,31 @@ class TimelineController : UITableViewController, TWTRTweetViewDelegate {
     return cell
     }*/
     
-   /*override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+   override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerCell = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! CustomHeaderCell
         //headerCell.backgroundColor = UIColor.cyanColor()
         headerCell.headerLabel.text = UserLog.Name
-        
-        if UserLog.ImageURL != "" {
+    
+        //headerCell.sub
+        //self.HeaderScreenName.text = UserLog.ScreenName
+        //let url = NSURL(string: UserLog.ImageURL)
+        //if let data = NSData(contentsOfURL: url!) {
+        //    self.HeaderProfilImg.image = UIImage(data: data)
+        //}
+    
+        /*if UserLog.ImageURL != "" {
             let url = NSURL(string: UserLog.ImageURL)
             if let data = NSData(contentsOfURL: url!) {
                 headerCell.backgroundView = UIImageView(image: UIImage(data: data))
             }
-        }
-        
+        }*/
+    
         return headerCell
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 110
-    }*/
+        return 80
+    }
     
     
     func getTimeLine(type: String){
