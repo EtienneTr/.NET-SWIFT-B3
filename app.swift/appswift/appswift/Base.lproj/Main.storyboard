@@ -125,37 +125,81 @@
         <scene sceneID="2be-yZ-Ac5">
             <objects>
                 <tableViewController storyboardIdentifier="TimelineController" id="N9N-yb-JI7" customClass="TimelineController" customModule="appswift" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="45" sectionHeaderHeight="28" sectionFooterHeight="28" id="c9T-NW-HBF">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="65" sectionHeaderHeight="28" sectionFooterHeight="28" id="c9T-NW-HBF">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HeaderCell" rowHeight="45" id="jfc-G8-CqK" customClass="CustomHeaderCell" customModule="appswift" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="600" height="45"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HeaderCell" rowHeight="65" id="jfc-G8-CqK" customClass="HeaderCellTimeLineController" customModule="appswift" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="600" height="65"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jfc-G8-CqK" id="NQQ-XX-SYm">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Guest" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wqe-Ds-boX">
-                                            <rect key="frame" x="70" y="4" width="93" height="35"/>
-                                            <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W8L-9f-bKB">
-                                            <rect key="frame" x="18" y="3" width="44" height="38"/>
-                                        </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="@Guest" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZAA-YD-pJM">
-                                            <rect key="frame" x="138" y="10" width="85" height="24"/>
+                                            <rect key="frame" x="75" y="31" width="193" height="24"/>
                                             <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="14"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W8L-9f-bKB">
+                                            <rect key="frame" x="8" y="5" width="51" height="51"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="50" id="Obw-na-sCN"/>
+                                                <constraint firstAttribute="height" constant="50" id="u5u-Oo-Zwk"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Guest" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wqe-Ds-boX">
+                                            <rect key="frame" x="75" y="5" width="215" height="35"/>
+                                            <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="HeaderLabel" destination="wqe-Ds-boX" id="a9X-5L-g5k"/>
+                                    <outlet property="ProfileImg" destination="W8L-9f-bKB" id="IqA-0J-ZCo"/>
+                                    <outlet property="ScreenName" destination="ZAA-YD-pJM" id="psS-GT-c5W"/>
                                     <outlet property="headerLabel" destination="wqe-Ds-boX" id="ZBI-XX-Zsh"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cells" rowHeight="228" id="Zmi-wk-0eR" customClass="CellTimeLineController" customModule="appswift" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="93" width="600" height="228"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Zmi-wk-0eR" id="gfp-kU-3yQ">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="227"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PGX-46-SJi">
+                                            <rect key="frame" x="8" y="16" width="74" height="69"/>
+                                        </imageView>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fnw-KT-OkO">
+                                            <rect key="frame" x="90" y="15" width="77" height="31"/>
+                                            <state key="normal" title="User">
+                                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SQP-X6-6pZ">
+                                            <rect key="frame" x="175" y="15" width="106" height="30"/>
+                                            <state key="normal" title="@Guest">
+                                                <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Text" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M2d-RJ-Mig">
+                                            <rect key="frame" x="90" y="44" width="502" height="116"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="TweetText" destination="M2d-RJ-Mig" id="mQt-l7-TZe"/>
+                                    <outlet property="UserImg" destination="PGX-46-SJi" id="Fjq-Is-D2i"/>
+                                    <outlet property="UserName" destination="fnw-KT-OkO" id="f8E-Bg-OmQ"/>
+                                    <outlet property="UserScreenName" destination="SQP-X6-6pZ" id="jdM-SQ-vNv"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

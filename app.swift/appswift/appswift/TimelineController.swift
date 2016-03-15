@@ -74,8 +74,19 @@ class TimelineController : UITableViewController, TWTRTweetViewDelegate {
         let cell = tableView.dequeueReusableCellWithIdentifier(tweetTableReuseIdentifier, forIndexPath: indexPath) as! TWTRTweetTableViewCell
         cell.configureWithTweet(tweet as! TWTRTweet)
         cell.tweetView.delegate = self
+        /*let cell = tableView.dequeueReusableCellWithIdentifier("Cells", forIndexPath: indexPath) as! CellTimeLineController
+        cell.UserName = tweet.UserName
+        cell.UserScreenName = tweet.UserScreenName
+        cell.UserImg = tweet.UserImg
+        cell.TweetText = tweet.TweetText*/
+        cell.tweetView.showActionButtons = true
         
+        //cell.tweetView.delegate?.tweetView!(cell.tweetView, didSelectTweet: delTweet)
         return cell
+    }
+    
+    func tweetView(tweetView: TWTRTweetView, didSelectTweet: TWTRTweet) -> Void {
+        print("Tweet sélectionné")
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -87,44 +98,42 @@ class TimelineController : UITableViewController, TWTRTweetViewDelegate {
     return "User"
     }**/
     
-    /*override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    //override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     // Here, we use NSFetchedResultsController
     // And we simply use the section name as title
     //let currSection = fetchedResultsController.sections?[section]
     //let title = currSection!.name
     
-    // Dequeue with the reuse identifier
-    let cell = self.tableView.dequeueReusableHeaderFooterViewWithIdentifier("TableSectionHeader")
-    //let header = cell as! TableSectionHeader
-    header.titleLabel.text = title
-    
-    return cell
-    }*/
+        
+    //}
     
    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerCell = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! CustomHeaderCell
-        //headerCell.backgroundColor = UIColor.cyanColor()
-        headerCell.headerLabel.text = UserLog.Name
-    
-        //headerCell.sub
-        //self.HeaderScreenName.text = UserLog.ScreenName
-        //let url = NSURL(string: UserLog.ImageURL)
-        //if let data = NSData(contentsOfURL: url!) {
-        //    self.HeaderProfilImg.image = UIImage(data: data)
-        //}
-    
         /*if UserLog.ImageURL != "" {
             let url = NSURL(string: UserLog.ImageURL)
             if let data = NSData(contentsOfURL: url!) {
                 headerCell.backgroundView = UIImageView(image: UIImage(data: data))
             }
         }*/
+        let cell = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! HeaderCellTimeLineController
+        cell.ScreenName.text = "@\(UserLog.ScreenName)"
+        cell.HeaderLabel.text = UserLog.Name
     
-        return headerCell
+        let url = NSURL(string: UserLog.ImageURL)
+        if let data = NSData(contentsOfURL: url!) {
+            cell.ProfileImg.image = UIImage(data: data)
+        }
+    
+        cell.ProfileImg.layer.cornerRadius = 8.0
+        cell.ProfileImg.clipsToBounds = true
+        cell.ProfileImg.layer.borderWidth = 2.0
+        cell.ProfileImg.layer.borderColor = UIColor.lightGrayColor().CGColor
+    
+    
+        return cell
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 80
+        return 65
     }
     
     
@@ -187,5 +196,21 @@ class TimelineController : UITableViewController, TWTRTweetViewDelegate {
         }
     }
     
+    
+}
+
+class HeaderCellTimeLineController : UITableViewCell {
+    
+    @IBOutlet var HeaderLabel: UILabel!
+    @IBOutlet var ScreenName: UILabel!
+    @IBOutlet var ProfileImg: UIImageView!
+}
+
+class CellTimeLineController : UITableViewCell {
+    
+    @IBOutlet var UserImg: UIImageView!
+    @IBOutlet var UserName: UIButton!
+    @IBOutlet var UserScreenName: UIButton!
+    @IBOutlet var TweetText: UILabel!
     
 }
