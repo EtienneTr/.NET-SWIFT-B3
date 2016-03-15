@@ -29,7 +29,7 @@
 					Margin="0,0,0,0"
 					FontSize="30" />
 				<TextBlock
-					Text="{Binding CreatedDate}"
+					Text="{Binding _selectedUser.Name}"
 					Foreground="CornflowerBlue"
 					Margin="0,0,0,0"
 					FontSize="30" />
@@ -39,6 +39,7 @@
 					Grid.Row="0"
 					Grid.Column="0"
 					VerticalAlignment="Top"
+					Source="{Binding _selectedUser.Image}"
 					Margin="50,7,7,0"></Image>
 				<Button
 					x:Name="DecoButton"
@@ -55,10 +56,8 @@
 					Width="400"
 					HorizontalAlignment="Center"
 					VerticalAlignment="Center" />
-				<Button
-					x:Name="TweetButton"
-					Content="Tweet"
-					Click="TweetButton_Click"/>
+				<Butoon x:Name="Image" Content="Ajouter une image" Click="AddImage_click"/>
+				<Button x:Name="TweetButton" Content="Tweet" Click="TweetButton_Click"/>
 			</StackPanel>
 		</StackPanel>
 		<!--ContentPanel - place additional content here-->
