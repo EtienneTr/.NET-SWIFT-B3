@@ -67,7 +67,7 @@
                                     <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a0R-F7-UND">
                                         <rect key="frame" x="0.0" y="338" width="560" height="50"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DNW-0l-pVS">
+                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DNW-0l-pVS">
                                                 <rect key="frame" x="237" y="10" width="87" height="30"/>
                                                 <state key="normal" title="Let's Tweet !"/>
                                                 <connections>
@@ -75,6 +75,9 @@
                                                 </connections>
                                             </button>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstItem="DNW-0l-pVS" firstAttribute="centerX" secondItem="a0R-F7-UND" secondAttribute="centerX" id="oiA-QE-n1b"/>
+                                        </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iKr-4V-yNz">
                                         <rect key="frame" x="235" y="403" width="90" height="30"/>
@@ -163,43 +166,6 @@
                                     <outlet property="ProfileImg" destination="W8L-9f-bKB" id="IqA-0J-ZCo"/>
                                     <outlet property="ScreenName" destination="ZAA-YD-pJM" id="psS-GT-c5W"/>
                                     <outlet property="headerLabel" destination="wqe-Ds-boX" id="ZBI-XX-Zsh"/>
-                                </connections>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cells" rowHeight="228" id="Zmi-wk-0eR" customClass="CellTimeLineController" customModule="appswift" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="93" width="600" height="228"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Zmi-wk-0eR" id="gfp-kU-3yQ">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="227"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PGX-46-SJi">
-                                            <rect key="frame" x="8" y="16" width="74" height="69"/>
-                                        </imageView>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fnw-KT-OkO">
-                                            <rect key="frame" x="90" y="15" width="77" height="31"/>
-                                            <state key="normal" title="User">
-                                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            </state>
-                                        </button>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SQP-X6-6pZ">
-                                            <rect key="frame" x="175" y="15" width="106" height="30"/>
-                                            <state key="normal" title="@Guest">
-                                                <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                            </state>
-                                        </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Text" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M2d-RJ-Mig">
-                                            <rect key="frame" x="90" y="44" width="502" height="116"/>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="TweetText" destination="M2d-RJ-Mig" id="mQt-l7-TZe"/>
-                                    <outlet property="UserImg" destination="PGX-46-SJi" id="Fjq-Is-D2i"/>
-                                    <outlet property="UserName" destination="fnw-KT-OkO" id="f8E-Bg-OmQ"/>
-                                    <outlet property="UserScreenName" destination="SQP-X6-6pZ" id="jdM-SQ-vNv"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

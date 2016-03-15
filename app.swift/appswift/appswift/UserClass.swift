@@ -15,18 +15,41 @@ class User {
     var ScreenName : String = "@Guest"
     var ImageURL : String = ""
     var BannerImg : String = ""
-    var StatusCount = "0"
-    var Followers = "0"
-    var Following = "0"
+    var StatusCount : String = "0"
+    var Followers : String = "0"
+    var Following : String = "0"
     
+    var UserID : String
     
-    func getUserFullJson(){
+    //default init
+    init(){
+        self.UserID = "0"
+    }
+    
+    //init with id + get other infos
+    init(userID: String){
+        self.UserID = userID
+        
+        let session = Twitter.sharedInstance().sessionStore.session()
+        let client = TWTRAPIClient(userID: session!.userID)
+        
+        client.loadUserWithID(userID) { (user, error) -> Void in
+            if let user = user {
+                self.ScreenName = user.screenName
+                self.Name = user.name
+                self.ImageURL = user.profileImageLargeURL
+            }
+        }
+    }
+    
+    //get Follow, Tweet, friends INFOS
+    func getUserFullInfos(){
         
         let store = Twitter.sharedInstance().sessionStore
         let client = TWTRAPIClient(userID: store.session()?.userID)
         
         let statusesShowEndpoint = "https://api.twitter.com/1.1/users/lookup.json"
-        let params = ["user_id": store.session()!.userID]
+        let params = ["user_id": self.UserID]
         var clientError : NSError?
         
         let request = client.URLRequestWithMethod("GET", URL: statusesShowEndpoint, parameters: params, error: &clientError)

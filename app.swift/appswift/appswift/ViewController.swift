@@ -42,12 +42,16 @@ class ViewController: UIViewController {
                     UserLog.ScreenName = user.screenName
                     UserLog.Name = user.name
                     UserLog.ImageURL = user.profileImageLargeURL
+                    UserLog.UserID = user.userID
                     
                     self.getUserFullJson()
                     self.updateInterface()
                     
                 }
             }
+            
+        } else {
+            GotoConnectionController()
         }
         
     }
@@ -191,8 +195,8 @@ class ViewController: UIViewController {
     }
     
     @IBAction func HomeTLAction(sender: AnyObject) {
-        Args = "user"
-        GotoTimeLineController()
+        GotoTimeLineController("user")
+        //view the User Profil TimeLine
     }
     
     func GotoConnectionController() {
@@ -202,11 +206,11 @@ class ViewController: UIViewController {
         self.navigationController!.pushViewController(loginViewController, animated: true)
     }
     
-    func GotoTimeLineController() {
+    func GotoTimeLineController(tlAction: String) {
         
-        let loginViewController = self.storyboard!.instantiateViewControllerWithIdentifier("TimelineController") as! TimelineController
-        
-        self.navigationController!.pushViewController(loginViewController, animated: true)
+        let timelineViewController = self.storyboard!.instantiateViewControllerWithIdentifier("TimelineController") as! TimelineController
+        timelineViewController.timelineNav = tlAction   
+        self.navigationController!.pushViewController(timelineViewController, animated: true)
     }
     
 }
