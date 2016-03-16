@@ -18,6 +18,7 @@ class TimelineController : UITableViewController, TWTRTweetViewDelegate {
     var timelineNav = "home"
     var CurrentUser = UserLog
     var buttonPath : [NSIndexPath] = []
+    var lastID = "0"
     
     override func viewDidLoad() {
         //super.viewDidLoad()
@@ -27,39 +28,7 @@ class TimelineController : UITableViewController, TWTRTweetViewDelegate {
         tableView.allowsSelection = false
         tableView.registerClass(TWTRTweetTableViewCell.self, forCellReuseIdentifier: tweetTableReuseIdentifier)
         
-        
-        /*let store = Twitter.sharedInstance().sessionStore
-        let client = TWTRAPIClient(userID: store.session()?.userID)
-        
-        //let client = TWTRAPIClient()
-        /*let dataSrc = TWTRUserTimelineDataSource(screenName: UserLog.Name, APIClient: client)
-        self.dataSource = dataSrc
-        
-        self.showTweetActions = true*/
-        
-        let statusesShowEndpoint = "https://api.twitter.com/1.1/statuses/user_timeline.json"
-        let params = ["user_id": store.session()!.userID]
-        var clientError : NSError?
-        
-        let request = client.URLRequestWithMethod("GET", URL: statusesShowEndpoint, parameters: params, error: &clientError)
-        if (clientError == nil) {
-            
-            client.sendTwitterRequest(request) { (response, data, connectionError) -> Void in
-                if (connectionError == nil) {
-                    var jsonError : NSError?
-                    do {
-                        let json : AnyObject? = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions())
-                        self.tweetData = TWTRTweet.tweetsWithJSONArray(json as! [AnyObject])
-                        
-                        self.tableView.reloadData()
-                        print(self.tweetData)
-                    } catch {
-                        jsonError = nil
-                    }
-                }
-            }
-            
-        }*/
+        //Construction de la Timeline du User voulu. Default = Home du User authentifié
         
         if(userID != "default"){
             CurrentUser = User(userID: self.userID)
@@ -68,9 +37,9 @@ class TimelineController : UITableViewController, TWTRTweetViewDelegate {
         }
         
         if self.timelineNav == "user" {
-            getTimeLine("user", user: self.userID)
+            getTimeLine("user", user: self.userID, append: false)
         } else {
-            getTimeLine("home", user: self.userID)
+            getTimeLine("home", user: self.userID, append: false)
         }
         
     }
@@ -79,43 +48,9 @@ class TimelineController : UITableViewController, TWTRTweetViewDelegate {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.tweetData.count
     }
+
     
-    /*override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if !buttonPath.contains(indexPath){
-            var currentShare = UIButton()
-            var todo = true
-            for subview in cell.subviews[0].subviews[0].subviews as [UIView] {
-                if todo{
-                    if let buttonView = subview as? UIButton {
-                        currentShare = buttonView
-                        todo = false
-                        break
-                    }
-                }
-            }
-            print(currentShare)
-            print(currentShare.center)
-            
-            let RTButton = UIButton(frame: currentShare.frame/*CGRectMake(currentShare.frame.minX, currentShare.frame.minY, 40, 30)*/)
-            RTButton.frame = CGRectMake(0, 0, 40, cell.frame.size.height - RTButton.frame.size.height)
-            //RTButton.center.x = currentShare.center.x
-            //RTButton.center.y = currentShare.center.y
-            RTButton.layer.backgroundColor = UIColor.redColor().CGColor
-            //RTButton.frame.origin = CGPoint(x: currentShare.frame.midX + 20, y: currentShare.frame.midY)
-            // RTButton.center.y = RTButton.center.y + 50
-            
-            RTButton.setTitle("RT", forState: .Normal)
-            
-            print(RTButton)
-            print(RTButton.center)
-            print("%%%%%%%%%%")
-            cell.subviews[0].subviews[0].addSubview(RTButton)
-            
-            buttonPath.append(indexPath)
-        }
-        
-    }*/
-    
+    //construit le Tweet à chaque row
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let tweet = self.tweetData[indexPath.row]
         let cell = tableView.dequeueReusableCellWithIdentifier(tweetTableReuseIdentifier, forIndexPath: indexPath) as! TWTRTweetTableViewCell
@@ -123,59 +58,35 @@ class TimelineController : UITableViewController, TWTRTweetViewDelegate {
         cell.tweetView.delegate = self
         cell.tweetView.showActionButtons = true
         
+        //si Retweet = fond
         if tweet.isRetweeted == true {
-            cell.subviews[0].backgroundColor = UIColor.greenColor()
+            print("RT")
+            cell.subviews[0].subviews[0].backgroundColor = UIColor( red: CGFloat(170/255.0), green: CGFloat(255/255.0), blue: CGFloat(182/255.0), alpha: CGFloat(0.5) )
+            //cell.tweetView.layer.backgroundColor = UIColor.greenColor().CGColor
+        } else {
+            cell.subviews[0].subviews[0].backgroundColor = UIColor.whiteColor()
         }
         
-        /*let RTView = UIView()
-        let RTLabel = UILabel(frame: CGRectMake(160, 121, 40, 30))
-        RTLabel.center = CGPointMake(160, 284)
-        RTLabel.textAlignment = NSTextAlignment.Center
-        RTLabel.text = "RT"
-        RTView.addSubview(RTLabel)*/
-        
-        //cell.addSubview(RTView)
-        //print(cell.subviews[0].subviews[0].subviews)
-        //let currentShare = cell.subviews[0].subviews[0].subviews[1] as! UIButton
-        /*if !buttonPath.contains(indexPath){
-        var currentShare = UIButton()
-        var todo = true
-        for subview in cell.subviews[0].subviews[0].subviews as [UIView] {
-            if todo{
-                if let buttonView = subview as? UIButton {
-                    currentShare = buttonView
-                    todo = false
-                    break
-                }
+        //Détecte l'autoReload (charger les TWeets suivants
+        if(indexPath.row == tableView.numberOfRowsInSection(0) - 1){
+            //ID du dernier Tweet pour MaxID
+            self.lastID = tweet.tweetID
+            if self.timelineNav == "user" {
+                getTimeLine("user", user: self.userID, append: true)
+            } else {
+                getTimeLine("home", user: self.userID, append: true)
             }
         }
-        print(currentShare)
-        print(currentShare.center)
         
-        let RTButton = UIButton(frame: currentShare.frame/*CGRectMake(currentShare.frame.minX, currentShare.frame.minY, 40, 30)*/)
-        //RTButton.center.x = currentShare.center.x
-        //RTButton.center.y = currentShare.center.y
-        RTButton.layer.backgroundColor = UIColor.redColor().CGColor
-        //RTButton.frame.origin = CGPoint(x: currentShare.frame.midX + 20, y: currentShare.frame.midY)
-       // RTButton.center.y = RTButton.center.y + 50
-        
-        RTButton.setTitle("RT", forState: .Normal)
-        
-        print(RTButton)
-        print(RTButton.center)
-        print("%%%%%%%%%%")
-        cell.subviews[0].subviews[0].addSubview(RTButton)
-        
-        buttonPath.append(indexPath)
-        }*/
         return cell
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let tweet = self.tweetData[indexPath.row]
-        return TWTRTweetTableViewCell.heightForTweet(tweet as! TWTRTweet, width: CGRectGetWidth(self.view.bounds)) + 15
+        return TWTRTweetTableViewCell.heightForTweet(tweet as! TWTRTweet, width: CGRectGetWidth(self.view.bounds), showingActions: true)
     }
     
+    //construction du Header
    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     
         //Build Header Cell with current user
@@ -200,8 +111,14 @@ class TimelineController : UITableViewController, TWTRTweetViewDelegate {
         return 65
     }
     
-    //MARKS : Get TimeLine View
-    func getTimeLine(type: String, user: String){
+    //fix autoReload size TableView
+    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let tweet = self.tweetData[indexPath.row]
+        return TWTRTweetTableViewCell.heightForTweet(tweet as! TWTRTweet, width: CGRectGetWidth(self.view.bounds), showingActions: true)
+    }
+    
+    //MARKS : Get TimeLine View Home ou User
+    func getTimeLine(type: String, user: String, append: Bool){
         
         let store = Twitter.sharedInstance().sessionStore
         let client = TWTRAPIClient(userID: store.session()?.userID)
@@ -209,7 +126,12 @@ class TimelineController : UITableViewController, TWTRTweetViewDelegate {
         switch type {
             case "home":
                 let statusesShowEndpoint = "https://api.twitter.com/1.1/statuses/home_timeline.json"
-                let params = ["count": "20"]
+                var params = ["count": "20"]
+                
+                if(append){
+                    params["max_id"] = self.lastID
+                }
+                
                 var clientError : NSError?
                 
                 let request = client.URLRequestWithMethod("GET", URL: statusesShowEndpoint, parameters: params, error: &clientError)
@@ -219,13 +141,35 @@ class TimelineController : UITableViewController, TWTRTweetViewDelegate {
                         if (connectionError == nil) {
                             do {
                                 let json : AnyObject? = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions())
-                                self.tweetData = TWTRTweet.tweetsWithJSONArray(json as! [AnyObject])
+                                print(json?.count)
+                                if(!append){
+                                    self.tweetData = TWTRTweet.tweetsWithJSONArray(json as! [AnyObject])
+                                    self.tableView.reloadData()
+                                } else {
+                                    //self.tweetData.append(TWTRTweet.tweetsWithJSONArray(json as! [AnyObject]))
+                                    var dataArray = TWTRTweet.tweetsWithJSONArray(json as! [AnyObject])
+                                    dataArray.removeFirst()
+                                    var lastSize = self.tweetData.count
+                                    self.tweetData.appendContentsOf(dataArray)
+                                    self.tableView.beginUpdates()
+                                    var Index = [NSIndexPath]()
+                                    while lastSize < self.tweetData.count {
+                                        Index.append(NSIndexPath(forRow: lastSize, inSection: 0))
+                                        lastSize += 1
+                                    }
+                                    
+                                    self.tableView.insertRowsAtIndexPaths(Index, withRowAnimation: .None)
+                                    self.tableView.endUpdates()
+                                    
+                                }
                                 
-                                self.tableView.reloadData()
+                               // self.tableView.reloadData()
                                // print(self.tweetData)
                             } catch {
                                 print("erreur lors du chargement des Tweets")
                             }
+                        } else {
+                            print(connectionError)
                         }
                     }
                 }
@@ -239,7 +183,12 @@ class TimelineController : UITableViewController, TWTRTweetViewDelegate {
                     self.userID = "default"
                 }
                 let statusesShowEndpoint = "https://api.twitter.com/1.1/statuses/user_timeline.json"
-                let params = ["user_id": userID]
+                var params = ["user_id": userID]
+                
+                if(append){
+                    params["max_id"] = self.lastID
+                }
+                
                 var clientError : NSError?
                 
                 let request = client.URLRequestWithMethod("GET", URL: statusesShowEndpoint, parameters: params, error: &clientError)
@@ -249,10 +198,28 @@ class TimelineController : UITableViewController, TWTRTweetViewDelegate {
                         if (connectionError == nil) {
                             do {
                                 let json : AnyObject? = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions())
-                                self.tweetData = TWTRTweet.tweetsWithJSONArray(json as! [AnyObject])
                                 
-                                self.tableView.reloadData()
-                                print(self.tweetData)
+                                if(!append){
+                                    self.tweetData = TWTRTweet.tweetsWithJSONArray(json as! [AnyObject])
+                                    self.tableView.reloadData()
+                                } else {
+                                    var dataArray = TWTRTweet.tweetsWithJSONArray(json as! [AnyObject])
+                                    dataArray.removeFirst()
+                                    var lastSize = self.tweetData.count
+                                    self.tweetData.appendContentsOf(dataArray)
+                                    self.tableView.beginUpdates()
+                                    var Index = [NSIndexPath]()
+                                    while lastSize < self.tweetData.count {
+                                        Index.append(NSIndexPath(forRow: lastSize, inSection: 0))
+                                        lastSize += 1
+                                    }
+                                    
+                                    self.tableView.insertRowsAtIndexPaths(Index, withRowAnimation: .None)
+                                    self.tableView.endUpdates()
+                                }
+                                
+                                
+                                //print(self.tweetData)
                             } catch {
                                 print("erreur lors du chargement des Tweets")
                             }
@@ -265,6 +232,7 @@ class TimelineController : UITableViewController, TWTRTweetViewDelegate {
         }
     }
     
+    //navigue vers la timeline
     func GotoUserTimeLineController(userID: String) {
         
         let timelineViewController = self.storyboard!.instantiateViewControllerWithIdentifier("TimelineController") as! TimelineController
@@ -273,15 +241,25 @@ class TimelineController : UITableViewController, TWTRTweetViewDelegate {
         self.navigationController!.pushViewController(timelineViewController, animated: true)
     }
     
-    //Marks: TweetView
+    
+    //Marks: TweetView = Actions utilisateur sur un Tweet
     
     func tweetView(tweetView: TWTRTweetView, didSelectTweet: TWTRTweet) -> Void {
-        let alert = UIAlertController(title: "Retweet",
-            message: "Voulez-vous Retweet ?",
+        let alert = UIAlertController(title: "Tweet Action",
+            message: "Vous pouvez effectuer une action sur le tweet : ",
             preferredStyle: UIAlertControllerStyle.Alert
         )
-        alert.addAction(UIAlertAction(title: "Oui", style: UIAlertActionStyle.Default, handler: { action in self.Retweet(didSelectTweet) } ))
-        alert.addAction(UIAlertAction(title: "Non", style: UIAlertActionStyle.Default, handler: nil))
+        if(didSelectTweet.author.name != UserLog.Name || didSelectTweet.isRetweet){
+            var title = "Retweet"
+            if didSelectTweet.isRetweet {
+                title = "UnRetweet"
+            }
+            alert.addAction(UIAlertAction(title: title, style: UIAlertActionStyle.Default, handler: { action in self.Retweet(tweetView, tweet: didSelectTweet) } ))
+        } else {
+            alert.addAction(UIAlertAction(title: "Supprimer", style: UIAlertActionStyle.Default, handler: { action in self.DeleteTweet(tweetView, tweet: didSelectTweet) } ))
+        }
+        alert.addAction(UIAlertAction(title: "Répondre", style: UIAlertActionStyle.Default,handler: { action in self.ReplyAction(tweetView, tweet: didSelectTweet) } ))
+        alert.addAction(UIAlertAction(title: "Annuler", style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
@@ -292,30 +270,124 @@ class TimelineController : UITableViewController, TWTRTweetViewDelegate {
         }
     }
     
-    func Retweet(tweet: TWTRTweet) {
-        
-        if(tweet.isRetweeted == false){
+    
+    //Retweet/Unretweet a Tweet
+    func Retweet(tweetView: TWTRTweetView, tweet: TWTRTweet) {
         let store = Twitter.sharedInstance().sessionStore
         let client = TWTRAPIClient(userID: store.session()?.userID)
+        //retweet
+        if(tweet.isRetweeted == false){
         
-        let statusesShowEndpoint = "https://api.twitter.com/1.1/statuses/retweet/\(tweet.tweetID).json"
-        let params = ["id": tweet.tweetID]
-        var clientError : NSError?
+            let statusesShowEndpoint = "https://api.twitter.com/1.1/statuses/retweet/\(tweet.tweetID).json"
+            let params = ["id": tweet.tweetID]
+            var clientError : NSError?
         
-        let request = client.URLRequestWithMethod("POST", URL: statusesShowEndpoint, parameters: params, error: &clientError)
-        if (clientError == nil) {
-            print("Retweet")
+            let request = client.URLRequestWithMethod("POST", URL: statusesShowEndpoint, parameters: params, error: &clientError)
+            if (clientError == nil) {
+                client.sendTwitterRequest(request) { (response, data, connectionError) -> Void in
+                    if (connectionError == nil) {
+                        print("Retweet")
+                        tweetView.backgroundColor = UIColor( red: CGFloat(170/255.0), green: CGFloat(255/255.0), blue: CGFloat(182/255.0), alpha: CGFloat(0.5) )
+                    }
+                }
+                
+            }
         }
+        //Unretweet
+        else {
+            
+            let statusesShowEndpoint = "https://api.twitter.com/1.1/statuses/unretweet/\(tweet.tweetID).json"
+            let params = ["id": tweet.tweetID]
+            var clientError : NSError?
+            
+            let request = client.URLRequestWithMethod("POST", URL: statusesShowEndpoint, parameters: params, error: &clientError)
+            if (clientError == nil) {
+                client.sendTwitterRequest(request) { (response, data, connectionError) -> Void in
+                    if (connectionError == nil) {
+                        print("UnRetweet")
+                        tweetView.backgroundColor = UIColor.whiteColor()
+                    }
+                }
+                
+            }
         }
     }
     
+        func DeleteTweet(tweetView: TWTRTweetView, tweet: TWTRTweet){
+            let store = Twitter.sharedInstance().sessionStore
+            let client = TWTRAPIClient(userID: store.session()?.userID)
+            
+            let statusesShowEndpoint = "https://api.twitter.com/1.1/statuses/destroy/\(tweet.tweetID).json"
+            let params = ["id": tweet.tweetID]
+            var clientError : NSError?
+            
+            let request = client.URLRequestWithMethod("POST", URL: statusesShowEndpoint, parameters: params, error: &clientError)
+            if (clientError == nil) {
+                client.sendTwitterRequest(request) { (response, data, connectionError) -> Void in
+                    if (connectionError == nil) {
+                        print("Delete")
+                        let index = self.tweetData.indexOf({(tweet) -> Bool in
+                            return true
+                        })
+                        self.tweetData.removeAtIndex(index!)
+                        //self.tweetData = self.tweetData.filter { return $0 as! TWTRTweet != tweet }
+                        self.tableView.reloadData()
+                    }
+                }
+                
+            }
+        }
+    
+        func ReplyAction (tweetView: TWTRTweetView, tweet: TWTRTweet){
+            let AuthorScreen = tweet.author.screenName
+            var inputTextField: UITextField?
+            
+            let alert = UIAlertController(title: "Reply Tweet",
+                message: "Vous pouvez effectuer une action sur le tweet : ",
+                preferredStyle: UIAlertControllerStyle.Alert
+            )
+            alert.addTextFieldWithConfigurationHandler {(textField: UITextField!) in
+                textField.text = "@\(AuthorScreen)"
+                inputTextField = textField
+            }
+            alert.addAction(UIAlertAction(title: "Reply", style: UIAlertActionStyle.Default, handler: { action in self.ReplyTweet(tweet, text: inputTextField?.text) } ))
+            alert.addAction(UIAlertAction(title: "Annuler", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+            
+        }
+    
+    func ReplyTweet(tweet: TWTRTweet, text : String?){
+        if text?.characters.count > 140 {
+            print("Error : trop de caractères")
+        } else {
+            let store = Twitter.sharedInstance().sessionStore
+            let client = TWTRAPIClient(userID: store.session()?.userID)
+            
+            let statusesShowEndpoint = "https://api.twitter.com/1.1/statuses/update.json"
+            let params = ["status": text, "in_reply_to_status_id": tweet.tweetID]
+            var clientError : NSError?
+            
+            let request = client.URLRequestWithMethod("POST", URL: statusesShowEndpoint, parameters: params, error: &clientError)
+            if (clientError == nil) {
+                client.sendTwitterRequest(request) { (response, data, connectionError) -> Void in
+                    if (connectionError == nil) {
+                        print("Répondu")
+                    }
+                }
+                
+            }
+        }
+    
+    }
     
     
 }
 
+//Class for TableView Headet Outlets
 class HeaderCellTimeLineController : UITableViewCell {
     
     @IBOutlet var HeaderLabel: UILabel!
     @IBOutlet var ScreenName: UILabel!
     @IBOutlet var ProfileImg: UIImageView!
 }
+
