@@ -9,53 +9,69 @@ namespace AppNet.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
-    	private string _input;
+    	//Methode avec le pin
+    	private string _codeinput;
+    	public string Codeinput
+        {
+            get { return _codeinput; }
+            set { Set(ref _codeinput, value); }
+        }
     	
-    	private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e) 
-        { 
-            // TODO: Create an appropriate data model for your problem domain to replace the sample data 
-            DefaultViewModel["AuthRequired"] = true; 
-            DefaultViewModel["ServiceCall"] = false; 
- 
-            var oAuth = new OAuthInfo(); 
-            oAuth.ConsumerKey = TwitterConsumerKey; 
-            oAuth.ConsumerSecret = TwitterConsumerSecret; 
- 
-            m_TwitterClient = new TwitterClient(oAuth); 
+    	private RelayCommand _getCode;
+        public RelayCommand GetCode
+        {
+            get
+            {
+                if (_getCode == null)
+                    _getCode = new RelayCommand(GetCodeUser);
+                return _getCode;
+            }
         }
         
-    	public void TweetLogin(object sender, RoutedEventArgs e)
-		{
-    		// Create a new set of credentials for the application
-			var appCredentials = new TwitterCredentials("HDtWgQ90KCQUgfF8yhpQLxj5U", "J4yg5hVrlvCocWoT4lWCqQXvaZ7C5YAfw9wgGZwZF5YuFY46Up");
-			
-			// Go to the URL so that Twitter authenticates the user and gives him a PIN code
-			var url = CredentialsCreator.GetAuthorizationURL(appCredentials);
-			
-			// This line is an example, on how to make the user go on the URL
-			Process.Start(url);
-			
-			// Ask the user to enter the pin code given by Twitter
-			var pinCode = Console.ReadLine();
-			
-			// With this pin code it is now possible to get the credentials back from Twitter
-			var userCredentials = CredentialsCreator.GetCredentialsFromVerifierCode(pinCode, appCredentials);
-			
-			// Use the user credentials in your application
-			Auth.SetCredentials(userCredentials);
-    		PinAuthorizer auth = null;
-    		if (SuspensionManager.SessionState.ContainsKey("Authorizer"))
-    		{
-        		auth = SuspensionManager.SessionState["Authorizer"] as PinAuthorizer; 
-    		}
- 
-    		if (auth == null || !auth.IsAuthorized)
-    		{
-        		Frame.Navigate(typeof(Views.LoggedUserView));
-        		return;
-    		}
+        public void GetCodeUser()
+        {
+        	
+        }
+        
+        private RelayCommand _connection;
+        public RelayCommand Connection
+        {
+            get
+            {
+                if (_connection == null)
+                    _connection = new RelayCommand(TweetLogin);
+                return _connection;
+            }
+        }
+        
+        public async void TweetLogin()
+        {
+            if (!string.IsNullOrEmpty(_codeinput))
+            {
+                var userCredentials = CredentialsCreator.GetCredentialsFromVerifierCode(Codeinput, TwitterConnectionInfoSingleton.getInstance().GetAppCredentials());
 
-		}
+                if (userCredentials != null)
+                {
+                    Auth.SetCredentials(userCredentials);
+                    var account = new Token(userCredentials.AccessToken, userCredentials.AccessTokenSecret);
+                    AccountToken.SaveAccountData(account);
+                    this.NavigationService.Navigate(typeof(Views.LoggedUserView));
+                }
+                else
+                {
+                    var msgDialogue = new MessageDialog("Erreur de connexion, Mauvais code!");
+                    await msgDialogue.ShowAsync();
+                }
+            }
+
+            if (File.Exists(ApplicationData.Current.LocalFolder.Path + "\\config.json"))
+            {
+                var tokens = AccountToken.ReadTokens();
+                var userCredentials = Auth.CreateCredentials(TwitterConnectionInfoSingleton.getInstance().getConsumerKey(), TwitterConnectionInfoSingleton.getInstance().getConsumerSecret(), tokens.token, tokens.tokenSecret);
+                Auth.SetCredentials(userCredentials);
+                this.NavigationService.Navigate(typeof(Views.LoggedUserView));
+            }
+        }	
     }
 }
 

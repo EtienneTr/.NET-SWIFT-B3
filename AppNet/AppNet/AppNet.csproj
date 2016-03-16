@@ -99,15 +99,14 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
-    <Compile Include="ViewModels\TimeLineViewModel.cs" />
+    <Compile Include="ViewModels\LoggedUserViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
-    <Compile Include="Views\TimeLineView.xaml.cs">
-      <DependentUpon>TimeLineView.xaml</DependentUpon>
+    <Compile Include="Views\CodeUserView.xaml.cs">
+      <DependentUpon>CodeUserView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Views\LoggedUserView.xaml.cs">
       <DependentUpon>LoggedUserView.xaml</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -140,7 +139,7 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
-    <Page Include="Views\TimeLineView.xaml" />
+    <Page Include="Views\CodeUserView.xaml" />
     <Page Include="Views\LoggedUserView.xaml" />
     <Page Include="Views\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>

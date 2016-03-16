@@ -30,11 +30,18 @@ namespace AppNet.ViewModels
 		{
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
             SimpleIoc.Default.Register<MainPageViewModel>();
+            SimpleIoc.Default.Register<LoggedUserViewModel>();
 		}
 		
 		public MainPageViewModel Login
         {
             get { return ServiceLocator.Current.GetInstance<MainPageViewModel>(); }
         }
+		
+		public LoggedUserViewModel User
+		{
+			get { return ServiceLocator.Current.GetInstance<LoggedUserViewModel>(); }
+
+		}
 	}
 }

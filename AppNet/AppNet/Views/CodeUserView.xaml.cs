@@ -1,8 +1,8 @@
 ﻿/*
  * Created by SharpDevelop.
  * User: Ihab
- * Date: 03/11/2016
- * Time: 09:22
+ * Date: 03/16/2016
+ * Time: 10:46
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
@@ -19,13 +19,21 @@ using System.Windows.Media;
 namespace AppNet.Views
 {
 	/// <summary>
-	/// Interaction logic for AnOtherUserTimeLineView.xaml
+	/// Interaction logic for CodeUserView.xaml
 	/// </summary>
-	public partial class AnOtherUserTimeLineView : Window
+	public partial class CodeUserView : Page
 	{
-		public AnOtherUserTimeLineView()
+		public CodeUserView()
 		{
 			InitializeComponent();
 		}
+		
+		protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            var url =
+                CredentialsCreator.GetAuthorizationURL(TwitterConnectionInfoSingleton.getInstance().GetAppCredentials());
+
+            TwitterPin.Source = new Uri(url);
+        }
 	}
 }
