@@ -252,7 +252,15 @@ namespace AppNet.ViewModels
         }
         
         public void DeleteTweet(string idTweet)
-        {}
+        {
+        	var id = long.Parse(idTweet);
+            var tweet = this._timeLineTweets.First(t => t.Id == id);
+            if (tweet.CreatedBy.ScreenName == this._selecteduser.ScreenName)
+            {
+                this._timeLineTweets.Remove((Tweet)tweet);
+                Tweetinvi.Tweet.DestroyTweet(id);
+            }
+        }
         
         private RelayCommand _deco;
         public RelayCommand Deco

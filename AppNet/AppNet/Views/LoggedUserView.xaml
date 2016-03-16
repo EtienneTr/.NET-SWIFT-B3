@@ -137,8 +137,8 @@
 											<DataTemplate>
 												<Image
 													Source="{Binding MediaURL}"
-													MaxWidth="150"
-													MaxHeight="150"></Image>
+													MaxWidth="130"
+													MaxHeight="130"></Image>
 											</DataTemplate>
 										</ListView.ItemTemplate>
 									</ListView>
@@ -179,7 +179,7 @@
 											Source="ms-appx:///Assets/like.png"></Image>
 										<TextBlock
 											Name="favoriteTweet"
-											Text="{Binding FavoriteCount}"
+											Text="{Binding LikeCount}"
 											Margin="1, 0, 0, 0"></TextBlock>
 									</StackPanel>
 								</Button>
