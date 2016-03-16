@@ -90,6 +90,11 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <None Include="Assets\delete.png" />
+    <None Include="Assets\like.png" />
+    <None Include="Assets\reply.png" />
+    <None Include="Assets\retweet.png" />
+    <None Include="Assets\search.png" />
     <None Include="packages.config" />
     <None Include="project.json" />
   </ItemGroup>

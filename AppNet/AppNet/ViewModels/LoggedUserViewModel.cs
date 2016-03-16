@@ -40,12 +40,7 @@ namespace AppNet.ViewModels
         }
     
     
-    	private string _searchInput;
-    	public string SearchInput
-     	{
-            get { return _searchInput; }
-            set { Set(ref _searchInput, value); }
-        }
+    	
     	
     	private Tweetinvi.Logic.User _user;
     	public Tweetinvi.Logic.User user
@@ -68,13 +63,62 @@ namespace AppNet.ViewModels
         public ObservableCollection<Tweetinvi.Logic.Tweet> getTimeLine(Tweetinvi.Logic.User user)
         {
             var timeLine = Timeline.GetUserTimeline(user);
-            var timeLineCollection = new ObservableCollection<Tweet>();
+            var timeLineListe = new ObservableCollection<Tweet>();
             timeLine = timeLine.Where(t => t.InReplyToScreenName == null).ToList();
-            foreach (var tweet in timeLine)
+            foreach (var t in timeLine)
             {
-                timeLineCollection.Add((Tweetinvi.Logic.Tweet) tweet);
+                timeLineCollection.Add((Tweetinvi.Logic.Tweet) t);
             }
-            return timeLineCollection;
+            return timeLineListe;
+        }
+        
+        private string _searchInput;
+    	public string SearchInput
+     	{
+            get { return _searchInput; }
+            set { Set(ref _searchInput, value); }
+        }
+    	
+    	private RelayCommand _Search;
+        public RelayCommand Search
+        {
+            get
+            {
+                if (_Search == null)
+                    _Search = new RelayCommand(SearchInTwitter);
+                return _Search;
+            }
+        }
+        
+        public void SearchInTwitter()
+        {
+        	if (!string.IsNullOrEmpty(this._searchInput))
+            {
+                var tweets = Search.SearchTweets(this._searchInput);
+                var timeLineCollection = new ObservableCollection<Tweet>();
+                foreach (var tweet in tweets)
+                {
+                    timeLineCollection.Add((Tweetinvi.Logic.Tweet)tweet);
+                }
+                this.TimeLineTweets = timeLineCollection;
+                this._searchInput = "";
+            }
+        	else if (!String.IsNullOrEmpty(this._searchInput))
+            {
+                var AnOtherUser = (Tweetinvi.Logic.User) User.GetUserFromScreenName(this._searchInput);
+                if (AnOtherUser != null)
+                {
+                    this.Selecteduser = AnOtherUser;
+                    this.TimeLineTweets = this.getTimeLineObservableCollection(this.Selecteduser);
+                    this._searchInput = "";
+                }
+            }
+        }
+        
+        public string StringPostTweet
+        {
+            get { return _stringPostTweet; }
+            set { Set(ref _stringPostTweet, value); }
         }
         
         private RelayCommand _envoyerTweet;
@@ -88,13 +132,7 @@ namespace AppNet.ViewModels
             }
         }
         
-        // disable once MemberCanBeMadeStatic.Local
-        public string StringPostTweet
-        {
-            get { return _stringPostTweet; }
-            set { Set(ref _stringPostTweet, value); }
-        }
-		
+
   
     	public void EnvoyerTweet()
     	{
@@ -157,6 +195,75 @@ namespace AppNet.ViewModels
                 this.MediasTweet.Add(Upload.UploadImage(file1));});
     		
     	}
+    	
+    	private RelayCommand<string> _Reply;
+        public RelayCommand<string> Reply
+        {
+        	get
+            {
+                if (_Reply == null)
+                    _Reply = new RelayCommand(ReplyTweet);
+                return _Reply;
+            }
+        }
+        
+        public void ReplyTweet(string idTweet)
+        {
+        }
+    	private RelayCommand<string> _retweet;
+        public RelayCommand<string> Retweet
+        {
+        	get
+            {
+                if (_retweet == null)
+                    _retweet = new RelayCommand(ReTweet);
+                return _retweet;
+            }
+        }
+        
+        public void ReTweet(string idTweet)
+        {}
+        
+
+        
+        private RelayCommand<string> _Like;
+        public RelayCommand<string> Like
+        {
+        	get
+            {
+                if (_Like == null)
+                    _Like = new RelayCommand(LikeTweet);
+                return _Like;
+            }
+        }
+        
+        public void LikeTweet(string idTweet)
+        {}
+        
+        private RelayCommand<string> _Delete;
+        public RelayCommand<string> Delete
+        {
+        	get
+            {
+                if (_Delete == null)
+                    _Delete = new RelayCommand(DeleteTweet);
+                return _Delete;
+            }
+        }
+        
+        public void DeleteTweet(string idTweet)
+        {}
+        
+        private RelayCommand _deco;
+        public RelayCommand Deco
+        {
+        	get
+            {
+                if (_deco == null)
+                    _deco = new RelayCommand(deco_click);
+                return _deco;
+            }
+        }
     	
     	public void deco_click()
 		{

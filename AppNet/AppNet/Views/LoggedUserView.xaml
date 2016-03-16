@@ -1,40 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Page
-	x:Class="AppNet.Views.MainPage" 
-	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-	xmlns:Core="using:Microsoft.Xaml.Interactions.Core" xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" 
-	xmlns:controls="using:Template10.Controls" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-	xmlns:local="using:AppNet.Views" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-	xmlns:vm="using:AppNet.ViewModels"
-	mc:Ignorable="d">
-	<Page.DataContext>
-		<vm:MainPageViewModel
-			x:Name="ViewModel" />
-	</Page.DataContext>
-	<Grid
-		x:Name="LayoutRoot"
-		Background="White">
+	x:Class="AppNet.Views.MainPage" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Core="using:Microsoft.Xaml.Interactions.Core" xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" xmlns:controls="using:Template10.Controls" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="using:AppNet.Views" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:vm="using:AppNet.ViewModels"
+	mc:Ignorable="d"
+	DataContext="{Binding Source={StaticResource Locator}, Path=User}">
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition
+				Width="150" />
+			<ColumnDefinition
+				Width="5*" />
+		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
 			<RowDefinition
-				Height="Auto" />
+				Height="100" />
+			<RowDefinition
+				Height="*" />
 			<RowDefinition
 				Height="*" />
 		</Grid.RowDefinitions>
-		<StackPanel
-			x:Name="TitlePanel"
-			Margin="0,0,0,0">
+		<StackPanel>
 			<StackPanel
+				Grid.ColumnSpan="1"
 				Orientation="Horizontal">
 				<TextBlock
 					Text="Bienvenue "
 					Foreground="CornflowerBlue"
-					Margin="0,0,0,0"
 					FontSize="30" />
 				<TextBlock
 					Text="{Binding _selectedUser.Name}"
 					Foreground="CornflowerBlue"
-					Margin="0,0,0,0"
 					FontSize="30" />
 				<Image
 					Height="40"
@@ -42,80 +36,169 @@
 					Grid.Row="0"
 					Grid.Column="0"
 					VerticalAlignment="Top"
-					Source="{Binding _selectedUser.Image}"
-					Margin="50,7,7,0"></Image>
+					Source="{Binding _selectedUser.ProfileImageUrl400x400}"
+					Margin="50,7,7,0" />
 				<Button
-					x:Name="DecoButton"
-					Margin="40,20,0,20"
 					Content="Se deconnecter"
-					Click="deco_click"/>
+					Command="{Binding deco_click}"
+					Margin="10" />
 			</StackPanel>
-				<Button x:Name="TweetButton" Content="Tweet" Command="EnvoyerTweet"/>
+			<StackPanel
+				Grid.ColumnSpan="2"
+				Width="150"
+				Height="55">
+				<Button
+					Command="{Binding sendTweet}"
+					Content="Tweet !"
+					HorizontalAlignment="Right"
+					Margin="10" />
 			</StackPanel>
 		</StackPanel>
-		<!--ContentPanel - place additional content here-->
-		<Grid
-			x:Name="ContentPanel"
+		<StackPanel
+			Orientation="Vertical"
 			Grid.Row="1"
-			Margin="0,0,0,0">
-			<Grid.Resources>
-				<DataTemplate
-					x:Key="tweetlist">
-					<Grid>
-						<Grid.RowDefinitions>
-							<RowDefinition
-								Height="Auto" />
-							<RowDefinition
-								Height="*" />
-						</Grid.RowDefinitions>
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition
-								Width="Auto" />
-							<ColumnDefinition
-								Width="*" />
-						</Grid.ColumnDefinitions>
-						<Rectangle
-							Fill="Gray"
-							Height="50"
-							Width="50"
-							Grid.Row="0"
-							Grid.Column="0"
-							VerticalAlignment="Top"
-							Margin="0,7,7,0"
-							Grid.RowSpan="2"></Rectangle>
-						<Image
-							Height="50"
-							Width="50"
-							Grid.Row="0"
-							Grid.Column="0"
-							VerticalAlignment="Top"
-							Margin="0,7,7,0"
-							Grid.RowSpan="2"></Image>
-						<TextBlock
-							Text="{Binding CreatedDate}"
-							Grid.Row="0"
-							Grid.Column="1"
-							Foreground="{StaticResource PhoneAccentBrush}"
-							VerticalAlignment="Top" />
-						<TextBlock
-							Text="{Binding Text}"
-							TextWrapping="Wrap"
-							Foreground="CornflowerBlue"
-							Grid.Row="1"
-							Grid.Column="1"
-							VerticalAlignment="Top" />
-					</Grid>
-				</DataTemplate>
-			</Grid.Resources>
-			<ListBox
-				ScrollViewer.VerticalScrollBarVisibility="Visible"
-				ItemTemplate="{StaticResource tweetlist}"
-				x:Name="tweetList"
-				Grid.Column="0"
-				Grid.Row="0"
-				HorizontalAlignment="Stretch"
-				VerticalAlignment="Stretch"
-				Margin="0,5,0,0" />
-		</Grid>
+			Margin="5"
+			Name="info">
+			<Image
+				Source="{Binding Selecteduser.ProfileImageUrl400x400}"
+				Width="100"
+				Height="100"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Top"
+				Margin="0, 10, 0, 0" />
+		</StackPanel>
+		<StackPanel
+			Orientation="Vertical"
+			Grid.Row="2"
+			Margin="3"
+			Name="searchPanel">
+			<TextBlock
+				Text="Recherche sur Twitter : "></TextBlock>
+			<StackPanel
+				Orientation="Horizontal">
+				<TextBox
+					Text="{Binding SearchInput, Mode=TwoWay}"
+					Width="100"
+					MaxWidth="100"></TextBox>
+				<Button
+					Command="{Binding search}">
+					<Image
+						Source="ms-appx:///Assets/search.png"></Image>
+				</Button>
+			</StackPanel>
+		</StackPanel>
+		<ScrollViewer
+			Name="TimeLineScroll"
+			Grid.RowSpan="2"
+			Grid.Column="1"
+			Margin="5, 30, 5, 5"
+			Grid.Row="1"
+			HorizontalContentAlignment="Stretch">
+			<ListView
+				Name="TimeLineList"
+				ItemsSource="{Binding TimeLineTweets}"
+				IsTapEnabled="False">
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<StackPanel
+							Orientation="Vertical">
+							<StackPanel
+								Orientation="Horizontal"
+								Margin="3">
+								<Image
+									Name="TimeLineProfileTweetImage"
+									Source="{Binding CreatedBy.ProfileImageUrl}"
+									Margin="2" />
+								<TextBlock
+									Name="TimeLineProfileName"
+									Text="{Binding CreatedBy.Name}"
+									Margin="2"
+									FontWeight="Bold" />
+								<TextBlock
+									Text="@"></TextBlock>
+								<TextBlock
+									Name="TimeLineProfilePseudo"
+									Text="{Binding CreatedBy.ScreenName}"
+									Margin="2"
+									FontSize="11" />
+							</StackPanel>
+							<StackPanel
+								Orientation="Vertical">
+								<TextBlock
+									Name="TimeLineText"
+									Text="{Binding Text}"
+									Margin="2" />
+								<StackPanel
+									Orientation="Horizontal">
+									<ListView
+										ItemsSource="{Binding Media}"
+										Name="MediaList">
+										<ListView.ItemTemplate>
+											<DataTemplate>
+												<Image
+													Source="{Binding MediaURL}"
+													MaxWidth="150"
+													MaxHeight="150"></Image>
+											</DataTemplate>
+										</ListView.ItemTemplate>
+									</ListView>
+								</StackPanel>
+							</StackPanel>
+							<StackPanel
+								Orientation="Horizontal">
+								<Button
+									Name="TimeLineReply"
+									Margin="2"
+									Command="{Binding Source={StaticResource Locator}, Path=TimeLine.Reply}"
+									CommandParameter="{Binding Id}">
+									<Image
+										Source="ms-appx:///Assets/reply.png"></Image>
+								</Button>
+								<Button
+									Name="TimeLineRetweet"
+									Margin="2"
+									Command="{Binding Source={StaticResource Locator}, Path=TimeLine.Retweet}"
+									CommandParameter="{Binding Id}">
+									<StackPanel
+										Orientation="Horizontal">
+										<Image
+											Source="ms-appx:///Assets/retweet.png"></Image>
+										<TextBlock
+											Text="{Binding RetweetCount}"
+											Margin="1, 0, 0, 0"></TextBlock>
+									</StackPanel>
+								</Button>
+								<Button
+									Name="TimeLineLike"
+									Margin="2"
+									Command="{Binding Source={StaticResource Locator}, Path=TimeLine.Like}"
+									CommandParameter="{Binding Id}">
+									<StackPanel
+										Orientation="Horizontal">
+										<Image
+											Source="ms-appx:///Assets/like.png"></Image>
+										<TextBlock
+											Name="favoriteTweet"
+											Text="{Binding FavoriteCount}"
+											Margin="1, 0, 0, 0"></TextBlock>
+									</StackPanel>
+								</Button>
+								<Button
+									Name="TimeLineDelete"
+									Margin="2"
+									Command="{Binding Source={StaticResource Locator}, Path=TimeLine.Delete}"
+									CommandParameter="{Binding Id}">
+									<StackPanel
+										Orientation="Horizontal">
+										<Image
+											Source="ms-appx:///Assets/delete.png"></Image>
+									</StackPanel>
+								</Button>
+							</StackPanel>
+						</StackPanel>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+		</ScrollViewer>
 	</Grid>
 </Page>
