@@ -17,6 +17,7 @@ using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Navigation; 
 using System.Threading.Tasks;
 using Windows.UI.Core;
@@ -194,7 +195,6 @@ namespace AppNet.ViewModels
             if (!string.IsNullOrEmpty(textBox.Text))
             {
             	var tweet = Tweetinvi.Tweet.PublishTweet(textBox.Text, new PublishTweetOptionalParameters{Medias = medias});
-            	this._nbCharacterTweet = 140;
             	this.MediasTweet = new List<IMedia>();
             }
             else
@@ -261,15 +261,14 @@ namespace AppNet.ViewModels
                 HorizontalAlignment = HorizontalAlignment.Left
             };
             stackPanel.Children.Add(buttonAddImage);
-            dialog.Content = stackPanel;
-            dialog.PrimaryButtonText = "DO IT!";
-            dialog.SecondaryButtonText = "Annuler";
+            msg.Content = stackPanel;
+            msg.PrimaryButtonText = "DO IT!";
+            msg.SecondaryButtonText = "Annuler";
             
             var medias = this.MediasTweet;
             if (!string.IsNullOrEmpty(textBox.Text))
             {
             	var tweet = Tweetinvi.Tweet.PublishTweet(textBox.Text, new PublishTweetOptionalParameters{Medias = medias});
-            	this._nbCharacterTweet = 140;
             	this.MediasTweet = new List<IMedia>();
             }
             else
@@ -364,7 +363,7 @@ namespace AppNet.ViewModels
             }
         }
         
-        
+      /*  
         private RelayCommand _deco;
         public RelayCommand Deco
         {
@@ -391,7 +390,7 @@ namespace AppNet.ViewModels
     		}
 
 		}
-    	
+    	*/
     	public void scrolled(ScrollViewer scrollViewer)
         {
     		var TimeLineUser = new UserTimelineParameters();
