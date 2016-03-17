@@ -17,12 +17,13 @@ namespace AppNet.Views
             InitializeComponent();
         }
         
-         protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            var url =
-                CredentialsCreator.GetAuthorizationURL(Connexion.getInstance().GetAppCredentials());
+ 
+        	var url = CredentialsCreator.GetAuthorizationURL(Connexion.GetAppCredentials());
 
-            TwitterPin.Source = new Uri(url);
+            this.AuthWeb.Source = url;
+        	
         }
         
         

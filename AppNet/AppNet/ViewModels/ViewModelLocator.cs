@@ -9,7 +9,6 @@
 using System;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,9 +20,6 @@ using System.ComponentModel;
 
 namespace AppNet.ViewModels
 {
-	/// <summary>
-	/// Description of ViewModelLocator.
-	/// </summary>
 	public class ViewModelLocator
 	{
 		public ViewModelLocator()
@@ -38,7 +34,7 @@ namespace AppNet.ViewModels
             get { return ServiceLocator.Current.GetInstance<MainPageViewModel>(); }
         }
 		
-		public LoggedUserViewModel User
+		public LoggedUserViewModel LoggedUser
 		{
 			get { return ServiceLocator.Current.GetInstance<LoggedUserViewModel>(); }
 

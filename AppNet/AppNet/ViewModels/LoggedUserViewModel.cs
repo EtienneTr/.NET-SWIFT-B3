@@ -8,20 +8,31 @@
  */
 
 using System;
-using System.Linq;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
+using System.Windows.Data;
+using System.Windows.Controls;
 using System.Threading.Tasks;
+using System.Windows.Data;
+using Windows.Storage.Pickers;  
+using Windows.Storage;
+using Windows.UI.Xaml.Media.Imaging; 
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Core;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
+using Windows.UI.ViewManagement;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
 using Template10.Mvvm;
 using Template10.Services.NavigationService;
-using Windows.UI.Xaml.Navigation;
 using GalaSoft.MvvmLight.Command;
 using Microsoft.Xaml.Interactivity;
 using Tweetinvi.Core.Credentials;
@@ -31,8 +42,10 @@ using Tweetinvi.Core.Interfaces.DTO;
 using Tweetinvi.Core.Interfaces.Factories;
 using Tweetinvi.Core.Parameters;
 using Tweetinvi.Logic.Model;
+using CredentialsCreator = Tweetinvi.CredentialsCreator;
 using Tweet = Tweetinvi.Logic.Tweet;
 using User = Tweetinvi.User;
+using AppNet.Model;
 using GalaSoft.MvvmLight.Command;
 
 namespace AppNet.ViewModels
@@ -48,9 +61,6 @@ namespace AppNet.ViewModels
 
             this.MediasTweet = new List<Tweetinvi.Core.Interfaces.DTO.IMedia>();
         }
-    
-    
-    	
     	
     	private Tweetinvi.Logic.User _user;
     	public Tweetinvi.Logic.User user
@@ -60,9 +70,9 @@ namespace AppNet.ViewModels
             
 		}
     	
-    	private ObservableCollection<Tweet> _timeLineTweets;
+    	private ObservableCollection<Tweetinvi.Logic.Tweet> _timeLineTweets;
 
-        public ObservableCollection<Tweet> TimeLineTweets
+        public ObservableCollection<Tweetinvi.Logic.Tweet> TimeLineTweets
         {
             get { return _timeLineTweets; }
             set
@@ -70,11 +80,11 @@ namespace AppNet.ViewModels
                 Set(ref _timeLineTweets, value);
             }
         }
-        
+   
         public ObservableCollection<Tweet> getTimeLine(Tweetinvi.Logic.User user)
         {
             var timeLine = Timeline.GetUserTimeline(user);
-            var timeLineListe = new ObservableCollection<Tweet>();
+            var timeLineListe = new ObservableCollection<Tweetinvi.Logic.Tweet>();
             timeLine = timeLine.Where(t => t.InReplyToScreenName == null).ToList();
             foreach (var t in timeLine)
             {
@@ -97,14 +107,14 @@ namespace AppNet.ViewModels
             set { Set(ref _stringPostTweet, value); }
         }
     	
-    	private RelayCommand _Search;
-        public RelayCommand Search
+    	private RelayCommand _ISearch;
+        public RelayCommand ISearch
         {
             get
             {
-                if (_Search == null)
-                    _Search = new RelayCommand(SearchInTwitter);
-                return _Search;
+                if (_ISearch == null)
+                    _ISearch = new RelayCommand(SearchInTwitter);
+                return _ISearch;
             }
         }
         
@@ -114,7 +124,7 @@ namespace AppNet.ViewModels
             {
         		
                 var tweets = Search.SearchTweets(this._searchInput);
-                var timeLineCollection = new ObservableCollection<Tweet>();
+                var timeLineCollection = new ObservableCollection<Tweetinvi.Logic.Tweet>();
                 foreach (var tweet in tweets)
                 {
                     timeLineCollection.Add((Tweetinvi.Logic.Tweet)tweet);
@@ -145,23 +155,15 @@ namespace AppNet.ViewModels
             }
         }
         
-        private void checkCharacter(object sender, KeyRoutedEventArgs e)
-        {
-            var textBox = (TextBox) sender;
-
-            this._nbCharacterTweet = 140 - textBox.Text.Length;
-            this.StringPostTweet = "Characters left : " + this._nbCharacterTweet;
-        }
 
   
     	public void EnvoyerTweet()
     	{
-    		var msg = new ContentDialog();
+    		var Tweetmsg = new ContentDialog();
     		
     		var stackPanel = new StackPanel();
     		
     		var textBox = new TextBox();
-            textBox.KeyUp += new KeyEventHandler(checkCharacter);
             textBox.MaxLength = 140;
             stackPanel.Children.Add(textBox);
 
@@ -183,15 +185,14 @@ namespace AppNet.ViewModels
                 HorizontalAlignment = HorizontalAlignment.Left
             };
             stackPanel.Children.Add(buttonAddImage);
-            msg.Content = stackPanel;
-            msg.PrimaryButtonText = "DO IT!";
-            msg.SecondaryButtonText = "Annuler";
+            Tweetmsg.Content = stackPanel;
+            Tweetmsg.PrimaryButtonText = "DO IT!";
+            Tweetmsg.SecondaryButtonText = "Annuler";
             
             var medias = this.MediasTweet;
             if (!string.IsNullOrEmpty(textBox.Text))
             {
             	var tweet = Tweetinvi.Tweet.PublishTweet(textBox.Text, new PublishTweetOptionalParameters{Medias = medias});
-            	this._nbCharacterTweet = 140;
             	this.MediasTweet = new List<IMedia>();
             }
             else
@@ -202,7 +203,6 @@ namespace AppNet.ViewModels
     	
     	public async void AddImage_click()
     	{
-    		// disable once SuggestUseVarKeywordEvident
     		FileOpenPicker File = new FileOpenPicker();
     		File.ViewMode = PickerViewMode.Thumbnail;
    			File.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
@@ -231,12 +231,11 @@ namespace AppNet.ViewModels
         {
         	var selectedTweet = Tweetinvi.Tweet.GetTweet(long.Parse(idTweet));
         	
-        	    		var msg = new ContentDialog();
+        	var Tweetmsg = new ContentDialog();
     		
     		var stackPanel = new StackPanel();
     		
     		var textBox = new TextBox();
-            textBox.KeyUp += new KeyEventHandler(checkTweetCharacter);
             textBox.MaxLength = 140;
             stackPanel.Children.Add(textBox);
 
@@ -258,15 +257,14 @@ namespace AppNet.ViewModels
                 HorizontalAlignment = HorizontalAlignment.Left
             };
             stackPanel.Children.Add(buttonAddImage);
-            dialog.Content = stackPanel;
-            dialog.PrimaryButtonText = "DO IT!";
-            dialog.SecondaryButtonText = "Annuler";
+            Tweetmsg.Content = stackPanel;
+            Tweetmsg.PrimaryButtonText = "DO IT!";
+            Tweetmsg.SecondaryButtonText = "Annuler";
             
             var medias = this.MediasTweet;
             if (!string.IsNullOrEmpty(textBox.Text))
             {
             	var tweet = Tweetinvi.Tweet.PublishTweet(textBox.Text, new PublishTweetOptionalParameters{Medias = medias});
-            	this._nbCharacterTweet = 140;
             	this.MediasTweet = new List<IMedia>();
             }
             else
@@ -303,7 +301,7 @@ namespace AppNet.ViewModels
             }
             
             tweet =Tweetinvi.Tweet.GetTweet(selectedTweetId);
-            var index = this.TimeLineTweets.IndexOf((this.TimeLineTweets.First(t => t.Id == tweetId)));
+            var index = this.TimeLineTweets.IndexOf((this.TimeLineTweets.First(t => t.Id == idTweet)));
             this.TimeLineTweets[index] = (Tweet) tweet;
         }
         
@@ -335,7 +333,7 @@ namespace AppNet.ViewModels
             }
             
             tweet =Tweetinvi.Tweet.GetTweet(selectedTweetId);
-            var index = this.TimeLineTweets.IndexOf((this.TimeLineTweets.First(t => t.Id == tweetId)));
+            var index = this.TimeLineTweets.IndexOf((this.TimeLineTweets.First(t => t.Id == idTweet)));
             this.TimeLineTweets[index] = (Tweet) tweet;
         }
         
@@ -362,7 +360,7 @@ namespace AppNet.ViewModels
         }
         
         
-        private RelayCommand _deco;
+        /*private RelayCommand _deco;
         public RelayCommand Deco
         {
         	get
@@ -373,7 +371,7 @@ namespace AppNet.ViewModels
             }
         }
     	
-    	/*public void deco_click()
+    	public void deco_click()
 		{
     		PinAuthorizer auth = null;
     		if (SuspensionManager.SessionState.ContainsKey("Authorizer"))
@@ -388,19 +386,5 @@ namespace AppNet.ViewModels
     		}
 
 		} */
-    	
-    	public void scrolled(ScrollViewer scrollViewer)
-        {
-    		var TimeLineUser = new UserTimelineParameters();
-    		TimeLineUser.MaxId = this.TimeLineTweets.Last().Id;
-            TimeLineUser.MaximumNumberOfTweetsToRetrieve = 20;
-            var tweets = Timeline.GetUserTimeline(this.user.Id, TimeLineUser);
-            var tweetsList = tweets.ToList();
-            tweetsList.RemoveAt(0);
-            foreach (var tweet in tweetsList)
-            {
-                this.TimeLineTweets.Add((Tweet) tweet);
-            }
-        }	
     }
 }

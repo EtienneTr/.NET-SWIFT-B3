@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Security;
+using System.Security.Principal;
 using System.Threading.Tasks;
+using System.IdentityModel;
 using Template10.Mvvm;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
@@ -62,7 +65,7 @@ namespace AppNet.ViewModels
                 {
                     
                     var account = new Token(userCredentials.AccessToken, userCredentials.AccessTokenSecret);
-                    AccountToken.SaveAccountData(account);
+                    AccessToken.SaveAccountData(account);
                     this.NavigationService.Navigate(typeof(Views.LoggedUserView));
                 }
 
