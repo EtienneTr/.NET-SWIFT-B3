@@ -20,6 +20,10 @@ using Template10.Mvvm;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
 using Tweetinvi;
+using Tweetinvi.Core.Interfaces.DTO;
+using Tweetinvi.Core.Interfaces.Factories;
+using Tweetinvi.Core.Parameters;
+using Tweetinvi.Logic.Model;
 using Tweet = Tweetinvi.Logic.Tweet;
 using User = Tweetinvi.User;
 
@@ -32,8 +36,7 @@ namespace AppNet.ViewModels
     	public LoggedUserViewModel()
         {
             this.user = (Tweetinvi.Logic.User) User.GetAuthenticatedUser();
-            this.TimeLineTweets = getTimeLineO(this.user);
-            
+            this.TimeLineTweets = getTimeLine(this.user);
 
             this.MediasTweet = new List<Tweetinvi.Core.Interfaces.DTO.IMedia>();
         }
@@ -46,6 +49,7 @@ namespace AppNet.ViewModels
 		{
 			get{return _user; }
             set{ Set(ref _user, value);}
+            
 		}
     	
     	private ObservableCollection<Tweet> _timeLineTweets;
@@ -213,7 +217,53 @@ namespace AppNet.ViewModels
         public void ReplyTweet(string idTweet)
         {
         	var selectedTweet = Tweetinvi.Tweet.GetTweet(long.Parse(tweetId));
+        	
+        	    		var msg = new ContentDialog();
+    		
+    		var stackPanel = new StackPanel();
+    		
+    		var textBox = new TextBox();
+            textBox.KeyUp += new KeyEventHandler(checkTweetCharacter);
+            textBox.MaxLength = 140;
+            stackPanel.Children.Add(textBox);
+
+            var textBlock = new TextBlock
+            {
+                Text = this.StringPostTweet
+            };
+            var binding = new Binding
+            {
+                Source = this,
+                Path = new PropertyPath("ReplyTweet")
+            };
+            
+            var buttonAddImage = new Button
+            {
+                Command = this.AddImage_click,
+                Content = "Ajouter un fichier",
+                VerticalAlignment = VerticalAlignment.Bottom,
+                HorizontalAlignment = HorizontalAlignment.Left
+            };
+            stackPanel.Children.Add(buttonAddImage);
+            dialog.Content = stackPanel;
+            dialog.PrimaryButtonText = "DO IT!";
+            dialog.SecondaryButtonText = "Annuler";
+            
+            var medias = this.MediasTweet;
+            if (!string.IsNullOrEmpty(textBox.Text))
+            {
+            	var tweet = Tweetinvi.Tweet.PublishTweet(textBox.Text, new PublishTweetOptionalParameters{Medias = medias});
+            	this._nbCharacterTweet = 140;
+            	this.MediasTweet = new List<IMedia>();
+            }
+            else
+            {
+            	this.EnvoyerTweet();
+            }   
+        	
+        	
         }
+        
     	private RelayCommand<string> _retweet;
         public RelayCommand<string> Retweet
         {
@@ -226,7 +276,23 @@ namespace AppNet.ViewModels
         }
         
         public void ReTweet(string idTweet)
-        {}
+        {
+        	var selectedTweetId = long.Parse(idTweet);
+        	var tweet = Tweetinvi.Tweet.GetTweet(selectedTweetId);
+        	
+            if (tweet.Retweeted)
+            {
+                Tweetinvi.Tweet.UnFavoriteTweet(selectedTweetId);
+            }
+            else
+            {
+                Tweetinvi.Tweet.FavoriteTweet(selectedTweetId);
+            }
+            
+            tweet =Tweetinvi.Tweet.GetTweet(selectedTweetId);
+            var index = this.TimeLineTweets.IndexOf((this.TimeLineTweets.First(t => t.Id == tweetId)));
+            this.TimeLineTweets[index] = (Tweet) tweet;
+        }
         
 
         
@@ -242,7 +308,23 @@ namespace AppNet.ViewModels
         }
         
         public void LikeTweet(string idTweet)
-        {}
+        {
+        	var selectedTweetId = long.Parse(idTweet);
+        	var tweet = Tweetinvi.Tweet.GetTweet(selectedTweetId);
+        	
+            if (tweet.Favorited)
+            {
+                Tweetinvi.Tweet.UnFavoriteTweet(selectedTweetId);
+            }
+            else
+            {
+                Tweetinvi.Tweet.FavoriteTweet(selectedTweetId);
+            }
+            
+            tweet =Tweetinvi.Tweet.GetTweet(selectedTweetId);
+            var index = this.TimeLineTweets.IndexOf((this.TimeLineTweets.First(t => t.Id == tweetId)));
+            this.TimeLineTweets[index] = (Tweet) tweet;
+        }
         
         private RelayCommand<string> _Delete;
         public RelayCommand<string> Delete
@@ -265,6 +347,7 @@ namespace AppNet.ViewModels
                 Tweetinvi.Tweet.DestroyTweet(id);
             }
         }
+        
         
         private RelayCommand _deco;
         public RelayCommand Deco
@@ -293,5 +376,18 @@ namespace AppNet.ViewModels
 
 		}
     	
+    	public void scrolled(ScrollViewer scrollViewer)
+        {
+    		var TimeLineUser = new UserTimelineParameters();
+    		TimeLineUser.MaxId = this.TimeLineTweets.Last().Id;
+            TimeLineUser.MaximumNumberOfTweetsToRetrieve = 20;
+            var tweets = Timeline.GetUserTimeline(this.user.Id, TimeLineUser);
+            var tweetsList = tweets.ToList();
+            tweetsList.RemoveAt(0);
+            foreach (var tweet in tweetsList)
+            {
+                this.TimeLineTweets.Add((Tweet) tweet);
+            }
+        }	
     }
 }

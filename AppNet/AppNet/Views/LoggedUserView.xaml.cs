@@ -16,6 +16,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using Tweetinvi;
+using AppNet.ViewModels;
 
 namespace AppNet.Views
 {
@@ -27,8 +28,14 @@ namespace AppNet.Views
 		public LoggedUserView()
 		{
 			InitializeComponent();
-            this.Loaded += OAuthPage_Loaded;
-    		OAuthWebBrowser.LoadCompleted += OAuthWebBrowser_LoadCompleted;
+        }
+		
+		
+        private void scrolled(object sender, ScrollViewerViewChangedEventArgs scrollViewerViewChangedEventArgs)
+        {
+            var data = (LoggedUserViewModel)DataContext;
+            var scrollView = (ScrollViewer)sender;
+            data.scrolled(scrollView);
         }
 		
 		
