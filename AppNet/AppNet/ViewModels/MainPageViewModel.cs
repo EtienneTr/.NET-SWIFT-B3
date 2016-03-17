@@ -4,35 +4,35 @@ using System.Threading.Tasks;
 using Template10.Mvvm;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
+using TwitterDotNet.Services.TweetinviAPI;
+using TwitterDotNet.Services.AccountManager;
+
 
 namespace AppNet.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
-    	//Methode avec le pin
+    	public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> suspensionState)
+        {
+            AppCredentials = new TwitterCredentials(TweetinviData.ConsumerKey, TweetinviData.ConsumerSecret);
+            var url = CredentialsCreator.GetAuthorizationURL(AppCredentials);
+            Uri targeturi = new Uri(url);
+
+            NavigationService.Navigate(typeof(Views.LoginPage), targeturi);
+            
+            await Task.CompletedTask;
+        }
+    	
+    	private Uri _webview;
+        public Uri WebView { get { return _webview; } set { _webview = value; RaisePropertyChanged(); } }
+        
     	private string _codeinput;
     	public string Codeinput
         {
             get { return _codeinput; }
             set { Set(ref _codeinput, value); }
         }
-    	
-    	private RelayCommand _getCode;
-        public RelayCommand GetCode
-        {
-            get
-            {
-                if (_getCode == null)
-                    _getCode = new RelayCommand(GetCodeUser);
-                return _getCode;
-            }
-        }
-        
-        public void GetCodeUser()
-        {
-        	
-        }
-        
+
         private RelayCommand _connection;
         public RelayCommand Connection
         {
@@ -46,6 +46,7 @@ namespace AppNet.ViewModels
         
         public async void TweetLogin()
         {
+        	
             if (!string.IsNullOrEmpty(_codeinput))
             {
                 var userCredentials = CredentialsCreator.GetCredentialsFromVerifierCode(Codeinput, TwitterConnectionInfoSingleton.getInstance().GetAppCredentials());
@@ -57,19 +58,7 @@ namespace AppNet.ViewModels
                     AccountToken.SaveAccountData(account);
                     this.NavigationService.Navigate(typeof(Views.LoggedUserView));
                 }
-                else
-                {
-                    var msgDialogue = new MessageDialog("Erreur de connexion, Mauvais code!");
-                    await msgDialogue.ShowAsync();
-                }
-            }
 
-            if (File.Exists(ApplicationData.Current.LocalFolder.Path + "\\config.json"))
-            {
-                var tokens = AccountToken.ReadTokens();
-                var userCredentials = Auth.CreateCredentials(TwitterConnectionInfoSingleton.getInstance().getConsumerKey(), TwitterConnectionInfoSingleton.getInstance().getConsumerSecret(), tokens.token, tokens.tokenSecret);
-                Auth.SetCredentials(userCredentials);
-                this.NavigationService.Navigate(typeof(Views.LoggedUserView));
             }
         }	
     }

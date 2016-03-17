@@ -28,12 +28,5 @@ namespace AppNet.Views
 			InitializeComponent();
 		}
 		
-		protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            var url =
-                CredentialsCreator.GetAuthorizationURL(TwitterConnectionInfoSingleton.getInstance().GetAppCredentials());
-
-            TwitterPin.Source = new Uri(url);
-        }
 	}
 }
