@@ -9,7 +9,6 @@
 			<ColumnDefinition
 				Width="*" />
 		</Grid.ColumnDefinitions>
-		<!-- - -->
 		<StackPanel>
 			<StackPanel
 				Grid.ColumnSpan="1"

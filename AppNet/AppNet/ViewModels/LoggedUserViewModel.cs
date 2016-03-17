@@ -31,11 +31,10 @@ namespace AppNet.ViewModels
     	
     	public LoggedUserViewModel()
         {
-            this.Selecteduser = (Tweetinvi.Logic.User) User.GetAuthenticatedUser();
-            this.TimeLineTweets = getTimeLineObservableCollection(this.Selecteduser);
-            this._headerText = "@"+this.Selecteduser.Name;
-            this._nbCharacterTweet = 140;
-            this._stringPostTweet = "Characters left : "+this._nbCharacterTweet;
+            this.user = (Tweetinvi.Logic.User) User.GetAuthenticatedUser();
+            this.TimeLineTweets = getTimeLineO(this.user);
+            
+
             this.MediasTweet = new List<Tweetinvi.Core.Interfaces.DTO.IMedia>();
         }
     
@@ -79,6 +78,13 @@ namespace AppNet.ViewModels
             set { Set(ref _searchInput, value); }
         }
     	
+    	private string _stringPostTweet;
+    	public string StringPostTweet
+        {
+            get { return _stringPostTweet; }
+            set { Set(ref _stringPostTweet, value); }
+        }
+    	
     	private RelayCommand _Search;
         public RelayCommand Search
         {
@@ -111,15 +117,12 @@ namespace AppNet.ViewModels
                     this.Selecteduser = AnOtherUser;
                     this.TimeLineTweets = this.getTimeLineObservableCollection(this.Selecteduser);
                     this._searchInput = "";
+                    
                 }
             }
         }
         
-        public string StringPostTweet
-        {
-            get { return _stringPostTweet; }
-            set { Set(ref _stringPostTweet, value); }
-        }
+
         
         private RelayCommand _envoyerTweet;
         public RelayCommand sendTweet
@@ -209,6 +212,7 @@ namespace AppNet.ViewModels
         
         public void ReplyTweet(string idTweet)
         {
+        	var selectedTweet = Tweetinvi.Tweet.GetTweet(long.Parse(tweetId));
         }
     	private RelayCommand<string> _retweet;
         public RelayCommand<string> Retweet
@@ -255,7 +259,7 @@ namespace AppNet.ViewModels
         {
         	var id = long.Parse(idTweet);
             var tweet = this._timeLineTweets.First(t => t.Id == id);
-            if (tweet.CreatedBy.ScreenName == this._selecteduser.ScreenName)
+            if (tweet.CreatedBy.ScreenName == this._user.ScreenName)
             {
                 this._timeLineTweets.Remove((Tweet)tweet);
                 Tweetinvi.Tweet.DestroyTweet(id);
