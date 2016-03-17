@@ -10,10 +10,13 @@
 using System.Collections.Generic;
 using Tweetinvi.Core.Interfaces.DTO;
 using System.Linq;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Windows.Storage; 
 using Windows.Storage.Pickers; 
-using Windows.UI.Xaml; 
-using Windows.UI.Xaml.Controls; 
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation; 
 using System.Threading.Tasks;
 using Windows.UI.Core;
@@ -24,14 +27,13 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Template10.Mvvm;
 using Template10.Services.NavigationService;
-using Windows.UI.Xaml.Navigation;
 using Tweetinvi;
-using Tweetinvi.Core.Interfaces.DTO;
 using Tweetinvi.Core.Interfaces.Factories;
 using Tweetinvi.Core.Parameters;
 using Tweetinvi.Logic.Model;
 using Tweet = Tweetinvi.Logic.Tweet;
 using User = Tweetinvi.User;
+using GalaSoft.MvvmLight.Command;
 
 namespace AppNet.ViewModels
 {
@@ -69,7 +71,7 @@ namespace AppNet.ViewModels
             }
         }
         
-        public ObservableCollection<Tweetinvi.Logic.Tweet> getTimeLine(Tweetinvi.Logic.User user)
+        public ObservableCollection<Tweet> getTimeLine(Tweetinvi.Logic.User user)
         {
             var timeLine = Timeline.GetUserTimeline(user);
             var timeLineListe = new ObservableCollection<Tweet>();
@@ -120,7 +122,7 @@ namespace AppNet.ViewModels
                 this.TimeLineTweets = timeLineCollection;
                 this._searchInput = "";
             }
-        	else if (!String.IsNullOrEmpty(this._searchInput))
+        	else if (!string.IsNullOrEmpty(this._searchInput))
             {
                 var AnOtherUser = (Tweetinvi.Logic.User) User.GetUserFromScreenName(this._searchInput);
                 if (AnOtherUser != null)
@@ -223,14 +225,14 @@ namespace AppNet.ViewModels
         	get
             {
                 if (_Reply == null)
-                    _Reply = new RelayCommand(ReplyTweet);
+                    _Reply = new RelayCommand<string>(ReplyTweet);
                 return _Reply;
             }
         }
         
         public void ReplyTweet(string idTweet)
         {
-        	var selectedTweet = Tweetinvi.Tweet.GetTweet(long.Parse(tweetId));
+        	var selectedTweet = Tweetinvi.Tweet.GetTweet(long.Parse(idTweet));
         	
         	    		var msg = new ContentDialog();
     		
@@ -284,7 +286,7 @@ namespace AppNet.ViewModels
         	get
             {
                 if (_retweet == null)
-                    _retweet = new RelayCommand(ReTweet);
+                    _retweet = new RelayCommand<string>(ReTweet);
                 return _retweet;
             }
         }
@@ -316,7 +318,7 @@ namespace AppNet.ViewModels
         	get
             {
                 if (_Like == null)
-                    _Like = new RelayCommand(LikeTweet);
+                    _Like = new RelayCommand<string>(LikeTweet);
                 return _Like;
             }
         }
@@ -346,7 +348,7 @@ namespace AppNet.ViewModels
         	get
             {
                 if (_Delete == null)
-                    _Delete = new RelayCommand(DeleteTweet);
+                    _Delete = new RelayCommand<string>(DeleteTweet);
                 return _Delete;
             }
         }
