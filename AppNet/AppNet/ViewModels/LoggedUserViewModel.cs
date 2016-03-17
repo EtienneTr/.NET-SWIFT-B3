@@ -7,18 +7,12 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
-using System.Collections.Generic;
-using Tweetinvi.Core.Interfaces.DTO;
+using System;
 using System.Linq;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using Windows.Storage; 
-using Windows.Storage.Pickers; 
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Navigation; 
+using System.IO;
 using System.Threading.Tasks;
+using Windows.Storage;
+using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -27,7 +21,13 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Template10.Mvvm;
 using Template10.Services.NavigationService;
+using Windows.UI.Xaml.Navigation;
+using GalaSoft.MvvmLight.Command;
+using Microsoft.Xaml.Interactivity;
+using Tweetinvi.Core.Credentials;
+using Tweetinvi.Credentials;
 using Tweetinvi;
+using Tweetinvi.Core.Interfaces.DTO;
 using Tweetinvi.Core.Interfaces.Factories;
 using Tweetinvi.Core.Parameters;
 using Tweetinvi.Logic.Model;
@@ -129,14 +129,11 @@ namespace AppNet.ViewModels
                 {
                     this.user = AnOtherUser;
                     this.TimeLineTweets = this.getTimeLine(this.user);
-                    this._searchInput = "";
-                    
+                    this._searchInput = "";              
                 }
             }
         }
-        
-
-        
+ 
         private RelayCommand _envoyerTweet;
         public RelayCommand sendTweet
         {
