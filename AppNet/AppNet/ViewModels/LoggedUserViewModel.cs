@@ -373,7 +373,7 @@ namespace AppNet.ViewModels
             }
         }
     	
-    	public void deco_click()
+    	/*public void deco_click()
 		{
     		PinAuthorizer auth = null;
     		if (SuspensionManager.SessionState.ContainsKey("Authorizer"))
@@ -387,7 +387,7 @@ namespace AppNet.ViewModels
         		return;
     		}
 
-		}
+		} */
     	
     	public void scrolled(ScrollViewer scrollViewer)
         {
