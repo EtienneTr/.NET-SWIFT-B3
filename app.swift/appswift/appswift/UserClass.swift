@@ -20,6 +20,7 @@ class User {
     var Following : String = "0"
     
     var UserID : String
+    var Search : String = ""
     
     //default init
     init(){

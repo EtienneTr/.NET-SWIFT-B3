@@ -60,7 +60,6 @@ class TimelineController : UITableViewController, TWTRTweetViewDelegate {
         
         //si Retweet = fond
         if tweet.isRetweeted == true {
-            print("RT")
             cell.subviews[0].subviews[0].backgroundColor = UIColor( red: CGFloat(170/255.0), green: CGFloat(255/255.0), blue: CGFloat(182/255.0), alpha: CGFloat(0.5) )
             //cell.tweetView.layer.backgroundColor = UIColor.greenColor().CGColor
         } else {

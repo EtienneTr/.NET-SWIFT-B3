@@ -12,24 +12,31 @@ import TwitterKit
 var UserLog = User()
 var Args : String = ""
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UISearchBarDelegate {
     
     
     @IBOutlet var LoginUserName: UILabel!
     @IBOutlet var LabelsView: UIView!
     @IBOutlet var ScreenNameUser: UIButton!
     
+    
+    @IBOutlet var UserProfilView: UIView!
     @IBOutlet var UserImageParent: UIView!
     @IBOutlet var UserImage: UIImageView!
     
     @IBOutlet var LogoutButton: UIButton!
     @IBOutlet var UserView: UIStackView!
     
+    @IBOutlet var SearchBar: UISearchBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationItem.hidesBackButton = true
+        SearchBar.delegate = self
+        
+        let gesture = UIGestureRecognizer(target: UserProfilView, action: "ProfilViewTouch")
+        UserProfilView.addGestureRecognizer(gesture)
         
         //User is log : affiche profil
         if let _ = Twitter.sharedInstance().sessionStore.session() {
@@ -199,6 +206,11 @@ class ViewController: UIViewController {
         //view the User Profil TimeLine
     }
     
+    func ProfilViewTouch(){
+        GotoTimeLineController("user")
+    }
+    
+    
     func GotoConnectionController() {
         
         let loginViewController = self.storyboard!.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
@@ -212,6 +224,23 @@ class ViewController: UIViewController {
         timelineViewController.timelineNav = tlAction   
         self.navigationController!.pushViewController(timelineViewController, animated: true)
     }
+    
+    func GotoSearchViewController() {
+        
+        let searchViewController = self.storyboard!.instantiateViewControllerWithIdentifier("SearchView") as! SearchViewController
+        
+        self.navigationController!.pushViewController(searchViewController, animated: true)
+    }
+    
+    //MArk : Search Delegate
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        if let text = SearchBar.text {
+            UserLog.Search = text
+            GotoSearchViewController()
+        }
+    }
+    
+    
     
 }
 

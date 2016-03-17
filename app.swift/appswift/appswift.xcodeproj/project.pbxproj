@@ -22,6 +22,7 @@
 		F1B515581C907C0B00396C9A /* CustomHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B515571C907C0B00396C9A /* CustomHeaderCell.swift */; };
 		F1B5155A1C91752100396C9A /* TimelineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B515591C91752100396C9A /* TimelineController.swift */; };
 		F1BDAA951C93185100CFACD0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1BDAA931C93185100CFACD0 /* Main.storyboard */; };
+		F1BDAA971C9AA9CE00CFACD0 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BDAA961C9AA9CE00CFACD0 /* SearchViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		F1B515571C907C0B00396C9A /* CustomHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomHeaderCell.swift; sourceTree = "<group>"; };
 		F1B515591C91752100396C9A /* TimelineController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineController.swift; sourceTree = "<group>"; };
 		F1BDAA941C93185100CFACD0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F1BDAA961C9AA9CE00CFACD0 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 				F1B5154C1C8F292200396C9A /* UserClass.swift */,
 				F1B515571C907C0B00396C9A /* CustomHeaderCell.swift */,
 				F126E4271C91839A0004FA6B /* LoginViewController.swift */,
+				F1BDAA961C9AA9CE00CFACD0 /* SearchViewController.swift */,
 			);
 			path = appswift;
 			sourceTree = "<group>";
@@ -302,6 +305,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F126E4281C91839A0004FA6B /* LoginViewController.swift in Sources */,
+				F1BDAA971C9AA9CE00CFACD0 /* SearchViewController.swift in Sources */,
 				F1B5155A1C91752100396C9A /* TimelineController.swift in Sources */,
 				F1B515581C907C0B00396C9A /* CustomHeaderCell.swift in Sources */,
 				F16A8C151C8D832500B67EC5 /* ViewController.swift in Sources */,

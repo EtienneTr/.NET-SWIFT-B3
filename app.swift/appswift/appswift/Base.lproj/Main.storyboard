@@ -19,11 +19,21 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" axis="vertical" distribution="equalSpacing" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="wuv-SP-sLj">
-                                <rect key="frame" x="20" y="120" width="560" height="433"/>
+                                <rect key="frame" x="20" y="120" width="560" height="575"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8hT-Et-ju1">
                                         <rect key="frame" x="0.0" y="0.0" width="560" height="78"/>
                                         <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MO9-ZP-v5r">
+                                                <rect key="frame" x="242" y="48" width="77" height="30"/>
+                                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="15"/>
+                                                <state key="normal" title="@Guest">
+                                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="HomeTLAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ogj-DR-Qu8"/>
+                                                </connections>
+                                            </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" restorationIdentifier="bvnLabel" text="Bienvenue Guest" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S0V-u0-iIg">
                                                 <rect key="frame" x="80" y="8" width="400" height="50"/>
                                                 <constraints>
@@ -34,15 +44,6 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MO9-ZP-v5r">
-                                                <rect key="frame" x="242" y="48" width="77" height="30"/>
-                                                <state key="normal" title="@Guest">
-                                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="HomeTLAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ogj-DR-Qu8"/>
-                                                </connections>
-                                            </button>
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="S0V-u0-iIg" firstAttribute="centerX" secondItem="8hT-Et-ju1" secondAttribute="centerX" id="Ufa-g3-34e"/>
@@ -69,6 +70,7 @@
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DNW-0l-pVS">
                                                 <rect key="frame" x="237" y="10" width="87" height="30"/>
+                                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="15"/>
                                                 <state key="normal" title="Let's Tweet !"/>
                                                 <connections>
                                                     <action selector="tweetAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nNm-f9-gI4"/>
@@ -80,17 +82,35 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iKr-4V-yNz">
-                                        <rect key="frame" x="235" y="403" width="90" height="30"/>
+                                        <rect key="frame" x="236" y="403" width="88" height="29"/>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="15"/>
                                         <state key="normal" title="Déconnexion"/>
                                         <connections>
                                             <action selector="LogoutAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gZf-vD-L7H"/>
                                         </connections>
                                     </button>
+                                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p9v-4S-BbD">
+                                        <rect key="frame" x="0.0" y="447" width="560" height="128"/>
+                                        <subviews>
+                                            <searchBar contentMode="redraw" ambiguous="YES" misplaced="YES" searchBarStyle="minimal" placeholder="Recherche" translatesAutoresizingMaskIntoConstraints="NO" id="KXg-qd-GcL">
+                                                <rect key="frame" x="180" y="0.0" width="200" height="44"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="200" id="kij-66-13S"/>
+                                                </constraints>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </searchBar>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="KXg-qd-GcL" firstAttribute="centerX" secondItem="p9v-4S-BbD" secondAttribute="centerX" id="hwh-2v-mnI"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="8hT-Et-ju1" firstAttribute="leading" secondItem="wuv-SP-sLj" secondAttribute="leading" id="0wR-1q-hq5"/>
                                     <constraint firstItem="pt6-VE-vPg" firstAttribute="leading" secondItem="wuv-SP-sLj" secondAttribute="leading" id="6Z7-9s-LiY"/>
                                     <constraint firstAttribute="trailing" secondItem="pt6-VE-vPg" secondAttribute="trailing" id="Ddn-8e-s3Q"/>
+                                    <constraint firstItem="p9v-4S-BbD" firstAttribute="leading" secondItem="wuv-SP-sLj" secondAttribute="leading" id="EUr-jg-7yk"/>
+                                    <constraint firstAttribute="trailing" secondItem="p9v-4S-BbD" secondAttribute="trailing" id="M7z-SI-jxj"/>
                                     <constraint firstItem="a0R-F7-UND" firstAttribute="leading" secondItem="wuv-SP-sLj" secondAttribute="leading" id="lHH-fq-lc8"/>
                                     <constraint firstAttribute="trailing" secondItem="a0R-F7-UND" secondAttribute="trailing" id="p7D-Zn-HoO"/>
                                     <constraint firstAttribute="trailing" secondItem="8hT-Et-ju1" secondAttribute="trailing" id="zdY-l5-wHi"/>
@@ -115,14 +135,34 @@
                         <outlet property="LoginUserName" destination="S0V-u0-iIg" id="tzj-5y-sUB"/>
                         <outlet property="LogoutButton" destination="iKr-4V-yNz" id="kUd-f5-D16"/>
                         <outlet property="ScreenNameUser" destination="MO9-ZP-v5r" id="MB8-4Y-uhk"/>
+                        <outlet property="SearchBar" destination="KXg-qd-GcL" id="eXy-45-iue"/>
                         <outlet property="UserImage" destination="rs6-im-81T" id="cUY-tf-yDz"/>
                         <outlet property="UserImageParent" destination="pt6-VE-vPg" id="Wfe-TZ-VuS"/>
+                        <outlet property="UserProfilView" destination="pt6-VE-vPg" id="Ryq-05-xOM"/>
                         <outlet property="UserView" destination="wuv-SP-sLj" id="JZ0-cG-Y4a"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1217" y="287"/>
+        </scene>
+        <!--Search View Controller-->
+        <scene sceneID="Htb-Vb-weK">
+            <objects>
+                <viewController storyboardIdentifier="SearchView" id="qO1-25-tjs" customClass="SearchViewController" customModule="appswift" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="zCr-UD-4Jm"/>
+                        <viewControllerLayoutGuide type="bottom" id="YnO-hE-4WO"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dno-sq-4uL" customClass="UITableView">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FQ7-M4-Xk2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1217" y="1102"/>
         </scene>
         <!--Timeline Controller-->
         <scene sceneID="2be-yZ-Ac5">
