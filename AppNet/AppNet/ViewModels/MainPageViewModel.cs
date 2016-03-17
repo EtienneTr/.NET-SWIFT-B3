@@ -7,6 +7,7 @@ using Windows.UI.Xaml.Navigation;
 using Tweetinvi;
 using Tweetinvi.Core.Credentials;
 using AppNet.Model;
+using GalaSoft.MvvmLight.Command;
 
 
 

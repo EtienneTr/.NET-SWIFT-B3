@@ -20,7 +20,7 @@ namespace AppNet
 
         public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
-            NavigationService.Navigate(typeof(Views.ConnectionPage));
+            NavigationService.Navigate(typeof(Views.MainPage));
             await Task.CompletedTask;
         }
     } 

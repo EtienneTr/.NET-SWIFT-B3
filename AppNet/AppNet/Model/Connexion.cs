@@ -44,14 +44,14 @@ namespace AppNet.Model
             return this.consumerSecret;
         }
         
-        public  static Connexion getInstance()
+       /* public  static Connexion getInstance()
         {
             if (instance == null)
             {
                 instance = new Connexion();
             }
 
-            return instance;
-        }
+            return this;
+        }*/
 	}
 }
