@@ -44,13 +44,10 @@ namespace AppNet.Model
             return this.consumerSecret;
         }
         
-        public  static Connexion getInstance()
+        
+        
+        public  static TwitterConnexion getInstance()
         {
-            if (instance == null)
-            {
-                instance = new Connexion();
-            }
-
             return instance;
         }
 	}

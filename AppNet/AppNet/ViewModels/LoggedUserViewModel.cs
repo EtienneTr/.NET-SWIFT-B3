@@ -16,6 +16,12 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls; 
 using Windows.UI.Xaml.Navigation; 
 using System.Threading.Tasks;
+using Windows.UI.Core;
+using Windows.UI.Popups;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Input;
 using Template10.Mvvm;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
@@ -70,7 +76,7 @@ namespace AppNet.ViewModels
             timeLine = timeLine.Where(t => t.InReplyToScreenName == null).ToList();
             foreach (var t in timeLine)
             {
-                timeLineCollection.Add((Tweetinvi.Logic.Tweet) t);
+                timeLineListe.Add((Tweetinvi.Logic.Tweet) t);
             }
             return timeLineListe;
         }
@@ -104,6 +110,7 @@ namespace AppNet.ViewModels
         {
         	if (!string.IsNullOrEmpty(this._searchInput))
             {
+        		
                 var tweets = Search.SearchTweets(this._searchInput);
                 var timeLineCollection = new ObservableCollection<Tweet>();
                 foreach (var tweet in tweets)
@@ -118,8 +125,8 @@ namespace AppNet.ViewModels
                 var AnOtherUser = (Tweetinvi.Logic.User) User.GetUserFromScreenName(this._searchInput);
                 if (AnOtherUser != null)
                 {
-                    this.Selecteduser = AnOtherUser;
-                    this.TimeLineTweets = this.getTimeLineObservableCollection(this.Selecteduser);
+                    this.user = AnOtherUser;
+                    this.TimeLineTweets = this.getTimeLine(this.user);
                     this._searchInput = "";
                     
                 }
@@ -139,6 +146,13 @@ namespace AppNet.ViewModels
             }
         }
         
+        private void checkCharacter(object sender, KeyRoutedEventArgs e)
+        {
+            var textBox = (TextBox) sender;
+
+            this._nbCharacterTweet = 140 - textBox.Text.Length;
+            this.StringPostTweet = "Characters left : " + this._nbCharacterTweet;
+        }
 
   
     	public void EnvoyerTweet()
@@ -148,7 +162,7 @@ namespace AppNet.ViewModels
     		var stackPanel = new StackPanel();
     		
     		var textBox = new TextBox();
-            textBox.KeyUp += new KeyEventHandler(checkTweetCharacter);
+            textBox.KeyUp += new KeyEventHandler(checkCharacter);
             textBox.MaxLength = 140;
             stackPanel.Children.Add(textBox);
 
@@ -170,9 +184,9 @@ namespace AppNet.ViewModels
                 HorizontalAlignment = HorizontalAlignment.Left
             };
             stackPanel.Children.Add(buttonAddImage);
-            dialog.Content = stackPanel;
-            dialog.PrimaryButtonText = "DO IT!";
-            dialog.SecondaryButtonText = "Annuler";
+            msg.Content = stackPanel;
+            msg.PrimaryButtonText = "DO IT!";
+            msg.SecondaryButtonText = "Annuler";
             
             var medias = this.MediasTweet;
             if (!string.IsNullOrEmpty(textBox.Text))
