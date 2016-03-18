@@ -147,17 +147,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\LoggedUserView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
+    <Page Include="Views\LoggedUserView.xaml" />
     <Page Include="Views\MainPage.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.5.2\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Autofac.dll</HintPath>
@@ -176,9 +171,7 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="System" />
     <Reference Include="System.Security" />
-    <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="Tweetinvi">
       <HintPath>..\packages\TweetinviAPI.0.9.11.1\lib\portable-net40+sl5+wp80+win8+wpa81\Tweetinvi.dll</HintPath>
