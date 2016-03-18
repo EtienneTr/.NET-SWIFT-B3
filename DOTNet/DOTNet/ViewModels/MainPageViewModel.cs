@@ -17,8 +17,13 @@ namespace DOTNet.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
+        TwitterCredentials TheappCredential;
 
-        private GalaSoft.MvvmLight.Views.INavigationService navigationService;
+        public MainPageViewModel()
+        {
+            TheappCredential = new TwitterCredentials("HDtWgQ90KCQUgfF8yhpQLxj5U", "J4yg5hVrlvCocWoT4lWCqQXvaZ7C5YAfw9wgGZwZF5YuFY46Up");
+            TwitterUrl = new Uri(CredentialsCreator.GetAuthorizationURL(TheappCredential));
+        }
 
         private string _codeinput;
         public string Codeinput
@@ -63,19 +68,28 @@ namespace DOTNet.ViewModels
 
             if (!string.IsNullOrEmpty(_codeinput))
             {
-                var appCredential = new TwitterCredentials("HDtWgQ90KCQUgfF8yhpQLxj5U", "J4yg5hVrlvCocWoT4lWCqQXvaZ7C5YAfw9wgGZwZF5YuFY46Up");
-                var userCredentials = CredentialsCreator.GetCredentialsFromVerifierCode(Codeinput, appCredential);
+               
+                var userCredentials = CredentialsCreator.GetCredentialsFromVerifierCode(Codeinput, TheappCredential);
                 Auth.SetCredentials(userCredentials);
 
-                if (userCredentials != null)
+                if (Auth.Credentials != null)
                 {
 
                     var account = new Token(userCredentials.AccessToken, userCredentials.AccessTokenSecret);
                     AccessToken.SaveAccountData(account);
-                    this.NavigationService.Navigate(typeof(Views.LoggedUserView));
+                    Frame rootFrame = Window.Current.Content as Frame;
+                    rootFrame.Navigate(typeof(Views.LoggedUserView));
+                   // this.NavigationService.Navigate(typeof(Views.LoggedUserView));
                 }
 
             }
+        }
+
+        private Uri _TwitterUrl;
+        public Uri TwitterUrl
+        {
+            get { return _TwitterUrl; }
+            set { Set(ref _TwitterUrl, value); }
         }
     }
 }

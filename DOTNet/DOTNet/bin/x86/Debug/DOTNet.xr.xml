@@ -28,7 +28,7 @@
     <RootPropertyPathName Name="tweetsCount" />
     <RootPropertyPathName Name="user" />
     <RootPropertyPathName Name="Login" />
-    <RootPropertyPathName Name="WebContent" />
+    <RootPropertyPathName Name="TwitterUrl" />
     <RootPropertyPathName Name="Connection" />
     <RootPropertyPathName Name="GetCode" />
     <RootPropertyPathName Name="Codeinput" />
@@ -58,6 +58,8 @@
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.WebView">
       <RootProperty Name="Source" />
+      <RootProperty Name="Height" />
+      <RootProperty Name="Width" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Data.Binding">
       <RootProperty Name="Source" />

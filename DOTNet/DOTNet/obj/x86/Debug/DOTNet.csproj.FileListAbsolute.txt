@@ -282,11 +282,3 @@ C:\Users\Etienne\Documents\Visual Studio 2015\Projects\DOTNet\DOTNet\obj\x86\Deb
 C:\Users\Etienne\Documents\Visual Studio 2015\Projects\DOTNet\DOTNet\obj\x86\Debug\GalaSoft.MvvmLight.Platform.pri.xml
 C:\Users\Etienne\Documents\Visual Studio 2015\Projects\DOTNet\DOTNet\obj\x86\Debug\Template10Library.pri.xml
 C:\Users\Etienne\Documents\Visual Studio 2015\Projects\DOTNet\DOTNet\obj\x86\Debug\ProjectArchitectures.txt
-C:\Users\Etienne\Documents\Visual Studio 2015\Projects\DOTNet\DOTNet\obj\x86\Debug\Autofac\layout.resfiles
-C:\Users\Etienne\Documents\Visual Studio 2015\Projects\DOTNet\DOTNet\obj\x86\Debug\Autofac\layout.resfiles.intermediate
-C:\Users\Etienne\Documents\Visual Studio 2015\Projects\DOTNet\DOTNet\obj\x86\Debug\Autofac\Resources.resfiles
-C:\Users\Etienne\Documents\Visual Studio 2015\Projects\DOTNet\DOTNet\obj\x86\Debug\Autofac\Resources.resfiles.intermediate
-C:\Users\Etienne\Documents\Visual Studio 2015\Projects\DOTNet\DOTNet\obj\x86\Debug\Autofac\pri.resfiles
-C:\Users\Etienne\Documents\Visual Studio 2015\Projects\DOTNet\DOTNet\obj\x86\Debug\Autofac\pri.resfiles.intermediate
-C:\Users\Etienne\Documents\Visual Studio 2015\Projects\DOTNet\DOTNet\obj\x86\Debug\Autofac\priconfig.xml
-C:\Users\Etienne\Documents\Visual Studio 2015\Projects\DOTNet\DOTNet\obj\x86\Debug\Autofac\priconfig.xml.intermediate
