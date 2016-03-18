@@ -109,7 +109,6 @@
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\CodeUserView.xaml.cs">
       <DependentUpon>CodeUserView.xaml</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Views\LoggedUserView.xaml.cs">
       <DependentUpon>LoggedUserView.xaml</DependentUpon>
@@ -145,8 +144,14 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
-    <Page Include="Views\CodeUserView.xaml" />
-    <Page Include="Views\LoggedUserView.xaml" />
+    <Page Include="Views\CodeUserView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\LoggedUserView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
