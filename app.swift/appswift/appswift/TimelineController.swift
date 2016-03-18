@@ -59,7 +59,7 @@ class TimelineController : UITableViewController, TWTRTweetViewDelegate {
         cell.tweetView.showActionButtons = true
         
         //si Retweet = fond
-        if tweet.isRetweeted == true {
+        if tweet.isRetweeted == true && self.timelineNav == "home"{
             cell.subviews[0].subviews[0].backgroundColor = UIColor( red: CGFloat(170/255.0), green: CGFloat(255/255.0), blue: CGFloat(182/255.0), alpha: CGFloat(0.5) )
             //cell.tweetView.layer.backgroundColor = UIColor.greenColor().CGColor
         } else {
@@ -140,7 +140,7 @@ class TimelineController : UITableViewController, TWTRTweetViewDelegate {
                         if (connectionError == nil) {
                             do {
                                 let json : AnyObject? = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions())
-                                print(json?.count)
+                               
                                 if(!append){
                                     self.tweetData = TWTRTweet.tweetsWithJSONArray(json as! [AnyObject])
                                     self.tableView.reloadData()
@@ -270,6 +270,7 @@ class TimelineController : UITableViewController, TWTRTweetViewDelegate {
     }
     
     
+    
     //Retweet/Unretweet a Tweet
     func Retweet(tweetView: TWTRTweetView, tweet: TWTRTweet) {
         let store = Twitter.sharedInstance().sessionStore
@@ -305,6 +306,15 @@ class TimelineController : UITableViewController, TWTRTweetViewDelegate {
                     if (connectionError == nil) {
                         print("UnRetweet")
                         tweetView.backgroundColor = UIColor.whiteColor()
+                        if self.timelineNav == "user" {
+                            let index = self.tweetData.indexOf({(tweet) -> Bool in
+                                return true
+                            })
+                            self.tweetData.removeAtIndex(index!)
+                            //self.tweetData = self.tweetData.filter { return $0 as! TWTRTweet != tweet }
+                            self.tableView.reloadData()
+                        }
+
                     }
                 }
                 

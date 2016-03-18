@@ -11,24 +11,33 @@ import UIKit
 import TwitterKit
 
 class User {
-    var Name : String = "Guest"
-    var ScreenName : String = "@Guest"
-    var ImageURL : String = ""
-    var BannerImg : String = ""
-    var StatusCount : String = "0"
-    var Followers : String = "0"
-    var Following : String = "0"
+    var Name : String
+    var ScreenName : String
+    var ImageURL : String
+    var BannerImg : String
+    var StatusCount : String
+    var Followers : String
+    var Following : String
     
     var UserID : String
-    var Search : String = ""
+    var Search : String
     
     //default init
     init(){
         self.UserID = "0"
+        self.Name = "Guest"
+        self.ScreenName = "@Guest"
+        self.ImageURL = ""
+        self.BannerImg = ""
+        self.StatusCount = "0"
+        self.Followers = "0"
+        self.Following = "0"
+        self.Search = ""
     }
     
     //init with id + get other infos
-    init(userID: String){
+    convenience init(userID: String){
+        self.init()
         self.UserID = userID
         
         let session = Twitter.sharedInstance().sessionStore.session()

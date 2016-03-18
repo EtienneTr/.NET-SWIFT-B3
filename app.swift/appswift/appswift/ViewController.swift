@@ -35,8 +35,9 @@ class ViewController: UIViewController, UISearchBarDelegate {
         self.navigationItem.hidesBackButton = true
         SearchBar.delegate = self
         
-        let gesture = UIGestureRecognizer(target: UserProfilView, action: "ProfilViewTouch")
-        UserProfilView.addGestureRecognizer(gesture)
+        let gesture = UIGestureRecognizer(target: self, action: Selector("ProfilViewTouch"))
+        UserImage.userInteractionEnabled = true
+        UserImage.addGestureRecognizer(gesture)
         
         //User is log : affiche profil
         if let _ = Twitter.sharedInstance().sessionStore.session() {
@@ -210,6 +211,9 @@ class ViewController: UIViewController, UISearchBarDelegate {
         GotoTimeLineController("user")
     }
     
+    @IBAction func ProfilAction(sender: UIButton) {
+        GotoTimeLineController("user")
+    }
     
     func GotoConnectionController() {
         

@@ -53,7 +53,15 @@
                                     <view clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pt6-VE-vPg">
                                         <rect key="frame" x="0.0" y="93" width="560" height="230"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rs6-im-81T">
+                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RF7-g8-99v">
+                                                <rect key="frame" x="255" y="200" width="48" height="30"/>
+                                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="16"/>
+                                                <state key="normal" title="Profil"/>
+                                                <connections>
+                                                    <action selector="ProfilAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="W6U-nD-28w"/>
+                                                </connections>
+                                            </button>
+                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rs6-im-81T">
                                                 <rect key="frame" x="180" y="15" width="200" height="200"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="150" id="G9f-tO-rhn"/>
@@ -63,6 +71,8 @@
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="rs6-im-81T" firstAttribute="centerX" secondItem="pt6-VE-vPg" secondAttribute="centerX" id="3kt-Yf-oJ4"/>
+                                            <constraint firstItem="RF7-g8-99v" firstAttribute="centerX" secondItem="pt6-VE-vPg" secondAttribute="centerX" id="VfD-Uq-zAP"/>
+                                            <constraint firstAttribute="bottom" secondItem="RF7-g8-99v" secondAttribute="bottom" id="itP-vZ-5fV"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a0R-F7-UND">
