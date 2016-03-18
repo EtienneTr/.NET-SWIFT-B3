@@ -2,6 +2,7 @@ using System;
 using Template10.Mvvm;
 using GalaSoft.MvvmLight.Command;
 using Tweetinvi;
+using AppNet.Model;
 using CredentialsCreator = Tweetinvi.CredentialsCreator;
 
 

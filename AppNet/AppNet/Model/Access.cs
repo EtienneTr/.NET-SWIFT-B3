@@ -34,6 +34,7 @@ namespace AppNet.Model
             this.tokenSecret = tokenSecret;
         }
 	}
+	
 	static class AccessToken
 	{
 
@@ -52,5 +53,12 @@ namespace AppNet.Model
 
             return tokens;
         }
+        
+    static class Connexion
+    {
+        static public string TwitterURL;
+        static public IConsumerCredentials AppCredentials;
+
+    }
 	}
 }
