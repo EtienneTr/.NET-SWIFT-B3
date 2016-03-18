@@ -137,7 +137,6 @@
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Styles\Custom.xaml">
@@ -148,7 +147,6 @@
     <Page Include="Views\CodeUserView.xaml" />
     <Page Include="Views\LoggedUserView.xaml" />
     <Page Include="Views\MainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
