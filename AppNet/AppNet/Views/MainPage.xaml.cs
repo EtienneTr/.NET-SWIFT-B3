@@ -6,6 +6,7 @@ using Tweetinvi;
 using AppNet.ViewModels;
 using AppNet.Model;
 using Windows.UI.Xaml.Navigation;
+using Tweetinvi;
 
 namespace AppNet.Views
 {
