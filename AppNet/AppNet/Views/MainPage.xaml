@@ -11,58 +11,58 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:AppNet.ViewModels"
 	DataContext="{Binding Source={StaticResource Locator}, Path=Login}">
-	<Grid>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition
-				Width="500" />
-			<ColumnDefinition
-				Width="*" />
-		</Grid.ColumnDefinitions>
-		<StackPanel>
-			<StackPanel
-				Grid.ColumnSpan="1"
-				Orientation="Horizontal"
-				Height="36">
-				<TextBlock
-					Name="Twitter"
-					Text="Bienvenue sur Twitter"
-					Margin="10, 10, 0, 0"/>
-			</StackPanel>
-			<StackPanel
-				Width="480"
-				Height="150">
-				<StackPanel
-					Grid.ColumnSpan="1"
-					Orientation="Horizontal"
-					Width="480"
-					Height="60">
-					<TextBlock
-						Name="CodeUser"
-						Text="Code PIN twitter :"
-						Margin="5, 20, 0, 0"
-						Width="130" />
-					<TextBox
-						Name="CodeValue"
-						Text="{Binding Codeinput, Mode=TwoWay}"
-						Margin="50, 20, 20, 20"
-						MaxLength="8"
-						Width="220"
-						Height="18" />
-				</StackPanel>
-				<Button
-					Name="Pin"
-					Content="Pin"
-					Command="{Binding GetCode}"
-					Grid.Row="1"
-					Margin="180, 10, 20, 5" />
-				<Button
-					Name="Connect"
-					Content="Se Connecter a Twitter"
-					Command="{Binding Connection}"
-					Grid.Row="1"
-					Margin="180, 10, 20, 5" />
-			</StackPanel>
-			
-		</StackPanel>
-	</Grid>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition
+				    Width="500" />
+            <ColumnDefinition
+				    Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <StackPanel
+				    Grid.ColumnSpan="1"
+				    Orientation="Horizontal"
+				    Height="36">
+                <TextBlock
+					    Name="Twitter"
+					    Text="Bienvenue sur Twitter"
+					    Margin="10, 10, 0, 0"/>
+            </StackPanel>
+            <StackPanel
+				    Width="480"
+				    Height="150">
+                <StackPanel
+					    Grid.ColumnSpan="1"
+					    Orientation="Horizontal"
+					    Width="480"
+					    Height="60">
+                    <TextBlock
+						    Name="CodeUser"
+						    Text="Code PIN twitter :"
+						    Margin="5, 20, 0, 0"
+						    Width="130" />
+                    <TextBox
+						    Name="CodeValue"
+						    Text="{Binding Codeinput, Mode=TwoWay}"
+						    Margin="50, 20, 20, 20"
+						    MaxLength="8"
+						    Width="220"
+						    Height="18" />
+                </StackPanel>
+                <Button
+					    Name="Pin"
+					    Content="Pin"
+					    Command="{Binding GetCode}"
+					    Grid.Row="1"
+					    Margin="180, 10, 20, 5" />
+                <Button
+					    Name="Connect"
+					    Content="Se Connecter a Twitter"
+					    Command="{Binding Connection}"
+					    Grid.Row="1"
+					    Margin="180, 10, 20, 5" />
+            </StackPanel>
+
+        </StackPanel>
+    </Grid>
 </Page>

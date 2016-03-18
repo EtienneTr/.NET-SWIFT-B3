@@ -1,3 +1,4 @@
+C:\Users\Etienne\Documents\GitHub\.NET-SWIFT-B3\AppNet\AppNet\obj\x86\Debug\AppNet.csprojResolveAssemblyReference.cache
 C:\Users\Etienne\Documents\GitHub\.NET-SWIFT-B3\AppNet\AppNet\obj\x86\Debug\App.g.i.cs
 C:\Users\Etienne\Documents\GitHub\.NET-SWIFT-B3\AppNet\AppNet\obj\x86\Debug\App.g.cs
 C:\Users\Etienne\Documents\GitHub\.NET-SWIFT-B3\AppNet\AppNet\obj\x86\Debug\Views\MainPage.g.i.cs
@@ -12,4 +13,3 @@ C:\Users\Etienne\Documents\GitHub\.NET-SWIFT-B3\AppNet\AppNet\obj\x86\Debug\Styl
 C:\Users\Etienne\Documents\GitHub\.NET-SWIFT-B3\AppNet\AppNet\obj\x86\Debug\Views\CodeUserView.xbf
 C:\Users\Etienne\Documents\GitHub\.NET-SWIFT-B3\AppNet\AppNet\obj\x86\Debug\Views\LoggedUserView.xbf
 C:\Users\Etienne\Documents\GitHub\.NET-SWIFT-B3\AppNet\AppNet\obj\x86\Debug\Views\MainPage.xbf
-C:\Users\Etienne\Documents\GitHub\.NET-SWIFT-B3\AppNet\AppNet\obj\x86\Debug\AppNet.csprojResolveAssemblyReference.cache
