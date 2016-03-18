@@ -42,7 +42,6 @@ using Tweetinvi.Logic.Model;
 using CredentialsCreator = Tweetinvi.CredentialsCreator;
 using Tweet = Tweetinvi.Logic.Tweet;
 using User = Tweetinvi.User;
-using AppNet.Model;
 using GalaSoft.MvvmLight.Command;
 
 namespace AppNet.ViewModels

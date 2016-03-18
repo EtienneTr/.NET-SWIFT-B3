@@ -1,5 +1,13 @@
+
 using System;
-using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Core;
+using Windows.UI.Xaml;
+using Tweetinvi;
+using AppNet.ViewModels;
+using AppNet.Model;
+using Windows.UI.Xaml.Navigation;
+using Tweetinvi;
 using Windows.ApplicationModel.Activation;
 
 namespace AppNet
@@ -10,8 +18,10 @@ namespace AppNet
     sealed partial class App : Template10.Common.BootStrapper
     {
 
-         public App() {
-            InitializeComponent(); }
+        public App() 
+        {
+            InitializeComponent();
+    	}
 
         public override async Task OnInitializeAsync(IActivatedEventArgs args)
         {

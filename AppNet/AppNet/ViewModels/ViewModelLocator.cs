@@ -16,7 +16,6 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
 using System.ComponentModel;
-using AppNet.ViewModels;
 
 
 namespace AppNet.ViewModels

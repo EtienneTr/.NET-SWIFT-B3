@@ -3,7 +3,7 @@ using Template10.Mvvm;
 using GalaSoft.MvvmLight.Command;
 using Tweetinvi;
 using CredentialsCreator = Tweetinvi.CredentialsCreator;
-using AppNet.Model;
+
 
 namespace AppNet.ViewModels
 {
