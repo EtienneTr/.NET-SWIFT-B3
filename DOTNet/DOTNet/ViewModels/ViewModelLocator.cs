@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DOTNet.ViewModels;
+using GalaSoft.MvvmLight.Views;
+using DOTNet.Views;
 
 namespace DOTNet.ViewModels
 {
@@ -17,6 +19,9 @@ namespace DOTNet.ViewModels
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
             SimpleIoc.Default.Register<MainPageViewModel>();
             SimpleIoc.Default.Register<LoggedUserViewModel>();
+
+            var navigationService = this.CreateNavigationService();
+            SimpleIoc.Default.Register<INavigationService>(() => navigationService);
         }
 
         public MainPageViewModel Login
@@ -28,6 +33,16 @@ namespace DOTNet.ViewModels
         {
             get { return ServiceLocator.Current.GetInstance<LoggedUserViewModel>(); }
 
+        }
+
+        private INavigationService CreateNavigationService()
+        {
+            var navigationService = new NavigationService();
+            navigationService.Configure("CodeUserView", typeof(CodeUserView));
+            // navigationService.Configure("key1", typeof(OtherPage1));
+            // navigationService.Configure("key2", typeof(OtherPage2))
+
+            return navigationService;
         }
     }
 }

@@ -35,7 +35,7 @@
 					Grid.ColumnSpan="1"
 					Orientation="Horizontal"
 					Width="480"
-					Height="60">
+					Height="70">
                 <TextBlock
 						Name="CodeUser"
 						Text="Code PIN twitter :"
@@ -47,7 +47,7 @@
 						Margin="50, 20, 20, 20"
 						MaxLength="8"
 						Width="220"
-						Height="18" />
+						Height="20" />
             </StackPanel>
             <Button
 					Name="Pin"
@@ -56,14 +56,21 @@
 					Grid.Row="1"
 					Margin="180, 10, 20, 5" />
             <Button
-					Name="Connect"
+					Name="Connection"
 					Content="Se Connecter a Twitter"
 					Command="{Binding Connection}"
 					Grid.Row="1"
 					Margin="180, 10, 20, 5" />
         </StackPanel>
+            <StackPanel Grid.ColumnSpan="1"
+				Orientation="Horizontal"
+				Height="500" >
 
-    </StackPanel>
+                <WebView x:Name="TwitterPin" Grid.Row="1" Source="{Binding WebContent}"/>
+
+            </StackPanel>
+        
+        </StackPanel>
     </Grid>
 
 </Page>

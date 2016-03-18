@@ -152,7 +152,7 @@ namespace DOTNet.ViewModels
 
             var buttonAddImage = new Button
             {
-                Command = this.AddImage_click,
+                Command = _addImage,
                 Content = "Ajouter un fichier",
                 VerticalAlignment = VerticalAlignment.Bottom,
                 HorizontalAlignment = HorizontalAlignment.Left
@@ -171,6 +171,17 @@ namespace DOTNet.ViewModels
             else
             {
                 this.EnvoyerTweet();
+            }
+        }
+
+        private RelayCommand _addImage;
+        public RelayCommand addImage
+        {
+            get
+            {
+                if (_addImage == null)
+                    _addImage = new RelayCommand(AddImage_click);
+                return _addImage;
             }
         }
 
@@ -225,7 +236,7 @@ namespace DOTNet.ViewModels
 
             var buttonAddImage = new Button
             {
-                Command = this.AddImage_click,
+                Command = _addImage,
                 Content = "Ajouter un fichier",
                 VerticalAlignment = VerticalAlignment.Bottom,
                 HorizontalAlignment = HorizontalAlignment.Left

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Template10.Mvvm;
@@ -9,11 +9,17 @@ using Tweetinvi;
 using Tweetinvi.Core.Credentials;
 using DOTNet.Model;
 using CredentialsCreator = Tweetinvi.CredentialsCreator;
+using GalaSoft.MvvmLight.Views;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace DOTNet.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
+
+        private GalaSoft.MvvmLight.Views.INavigationService navigationService;
+
         private string _codeinput;
         public string Codeinput
         {
@@ -34,7 +40,11 @@ namespace DOTNet.ViewModels
 
         public void GetPinConnection()
         {
-            this.NavigationService.Navigate(typeof(Views.CodeUserView));
+            Frame rootFrame = Window.Current.Content as Frame;
+            rootFrame.Navigate(typeof(Views.CodeUserView));
+            // navigationService.NavigateTo("CodeUserView", "");
+            // this.NavigationService.Navigate(new Uri("CodeUserView.xaml", UriKind.RelativeOrAbsolute));
+            //this.NavigationService.Navigate(typeof(Views.CodeUserView));
         }
 
         private RelayCommand _connection;

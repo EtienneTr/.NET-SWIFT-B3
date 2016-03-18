@@ -9,7 +9,7 @@
     xmlns:vm="using:DOTNet.ViewModels"
     xmlns:controls="using:Template10.Controls" >
     <Grid>
-
+        
         <WebView x:Name="TwitterPin" Grid.Row="1" Source="{Binding TwitterURL}"/>
     </Grid>
 </Page>
