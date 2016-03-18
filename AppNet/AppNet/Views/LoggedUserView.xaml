@@ -119,13 +119,15 @@
 			Grid.Column="1"
 			Grid.Row="0"
 			HorizontalAlignment="Stretch"
-			Height="406.4"
+			Height="400"
 			VerticalAlignment="Bottom"
 			Margin="5,0,4,5">
 			<ListView
 				ItemsSource="{Binding TimeLineTweets}"
-				Width="613"
-				Height="385">
+				ScrollViewer.HorizontalScrollMode="Auto" 
+				ScrollViewer.HorizontalScrollBarVisibility="Auto"
+				Width="610"
+				Height="390">
 				<ListView.ItemTemplate>
 					<DataTemplate>
 						<StackPanel
