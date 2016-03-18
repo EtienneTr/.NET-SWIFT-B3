@@ -12,10 +12,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Windows.Data;
-using System.Windows.Controls;
 using System.Threading.Tasks;
-using System.Windows.Data;
 using Windows.Storage.Pickers;  
 using Windows.Storage;
 using Windows.UI.Xaml.Media.Imaging; 
@@ -140,8 +137,8 @@ namespace AppNet.ViewModels
                 var AnOtherUser = (Tweetinvi.Logic.User) User.GetUserFromScreenName(this._searchInput);
                 if (AnOtherUser != null)
                 {
-                    this.user = AnOtherUser;
-                    this.TimeLineTweets = this.getTimeLine(this.user);
+                    this.Auser = AnOtherUser;
+                    this.TimeLineTweets = this.getTimeLine(this.Auser);
                     this._searchInput = "";              
                 }
             }
@@ -304,7 +301,7 @@ namespace AppNet.ViewModels
             }
             
             tweet =Tweetinvi.Tweet.GetTweet(selectedTweetId);
-            var index = this.TimeLineTweets.IndexOf((this.TimeLineTweets.First(t => t.Id == idTweet)));
+            var index = this.TimeLineTweets.IndexOf((this.TimeLineTweets.First(t => t.Id == long.Parse(idTweet))));
             this.TimeLineTweets[index] = (Tweet) tweet;
         }
         
@@ -336,7 +333,7 @@ namespace AppNet.ViewModels
             }
             
             tweet =Tweetinvi.Tweet.GetTweet(selectedTweetId);
-            var index = this.TimeLineTweets.IndexOf((this.TimeLineTweets.First(t => t.Id == idTweet)));
+            var index = this.TimeLineTweets.IndexOf((this.TimeLineTweets.First(t => t.Id == long.Parse(idTweet))));
             this.TimeLineTweets[index] = (Tweet) tweet;
         }
         
@@ -355,7 +352,7 @@ namespace AppNet.ViewModels
         {
         	var id = long.Parse(idTweet);
             var tweet = this._timeLineTweets.First(t => t.Id == id);
-            if (tweet.CreatedBy.ScreenName == this._user.ScreenName)
+            if (tweet.CreatedBy.ScreenName == this._Auser.ScreenName)
             {
                 this._timeLineTweets.Remove((Tweet)tweet);
                 Tweetinvi.Tweet.DestroyTweet(id);

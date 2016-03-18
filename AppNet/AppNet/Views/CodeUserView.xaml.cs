@@ -6,12 +6,8 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
-using System;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Core;
-using Windows.UI.Xaml;
 using Tweetinvi;
-using AppNet.ViewModels;
 using AppNet.Model;
 using Windows.UI.Xaml.Navigation;
 
@@ -20,7 +16,7 @@ namespace AppNet.Views
 	/// <summary>
 	/// Interaction logic for CodeUserView.xaml
 	/// </summary>
-	public partial class CodeUserView : Page
+	public sealed partial class CodeUserView : Page
 	{
 		public CodeUserView()
 		{

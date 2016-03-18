@@ -1,10 +1,13 @@
-<Page x:Class="AppNet.Views.CodeUserView"
+<?xml version="1.0" encoding="utf-8"?>
+<Page 
+    x:Class="AppNet.Views.CodeUserView"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
-	<Grid>
+    xmlns:Core="using:Microsoft.Xaml.Interactions.Core" 
+    xmlns:vm="using:AppNet.ViewModels">
+    <Grid>
 
 	<WebView x:Name="TwitterPin" Grid.Row="1" Source="{Binding TwitterURL}"/>
 	</Grid>
