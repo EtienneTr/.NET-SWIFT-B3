@@ -17,14 +17,7 @@ namespace AppNet.Views
             InitializeComponent();
         }
         
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
- 
-        	var url = CredentialsCreator.GetAuthorizationURL(Connexion.GetAppCredentials());
 
-            this.AuthWeb.Source = url;
-        	
-        }
         
         
     }

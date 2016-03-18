@@ -5,11 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 	<Grid>
-		<WebView
-				Grid.Row="0"
-				Height="Auto"
-				Width="Auto"
-				Source="{Binding WebView, Mode=TwoWay}" 
-		/>
+
+	<WebView x:Name="TwitterPin" Grid.Row="1" Source="{Binding TwitterURL}"/>
 	</Grid>
 </Page>

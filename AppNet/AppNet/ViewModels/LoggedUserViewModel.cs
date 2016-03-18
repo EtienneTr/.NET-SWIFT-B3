@@ -56,17 +56,18 @@ namespace AppNet.ViewModels
     	
     	public LoggedUserViewModel()
         {
-            this.user = (Tweetinvi.Logic.User) User.GetAuthenticatedUser();
-            this.TimeLineTweets = getTimeLine(this.user);
+            this.Auser = (Tweetinvi.Logic.User) User.GetAuthenticatedUser();
+            this.TimeLineTweets = getTimeLine(this.Auser);
 
             this.MediasTweet = new List<Tweetinvi.Core.Interfaces.DTO.IMedia>();
         }
     	
-    	private Tweetinvi.Logic.User _user;
-    	public Tweetinvi.Logic.User user
+    	private Tweetinvi.Logic.User _Auser;
+    	
+    	public Tweetinvi.Logic.User Auser
 		{
-			get{return _user; }
-            set{ Set(ref _user, value);}
+			get{return _Auser; }
+            set{ Set(ref _Auser, value);}
             
 		}
     	
@@ -81,9 +82,9 @@ namespace AppNet.ViewModels
             }
         }
    
-        public ObservableCollection<Tweet> getTimeLine(Tweetinvi.Logic.User user)
+        public ObservableCollection<Tweet> getTimeLine(Tweetinvi.Logic.User Auser)
         {
-            var timeLine = Timeline.GetUserTimeline(user);
+            var timeLine = Timeline.GetUserTimeline(Auser);
             var timeLineListe = new ObservableCollection<Tweetinvi.Logic.Tweet>();
             timeLine = timeLine.Where(t => t.InReplyToScreenName == null).ToList();
             foreach (var t in timeLine)
@@ -92,6 +93,8 @@ namespace AppNet.ViewModels
             }
             return timeLineListe;
         }
+        
+        
         
         private string _searchInput;
     	public string SearchInput

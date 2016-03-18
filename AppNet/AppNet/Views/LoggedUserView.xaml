@@ -52,7 +52,7 @@
 						<TextBlock
 							Text="Tweets : " />
 						<TextBlock
-							Text="{Binding user.tweetsCount}" />
+							Text="{Binding Auser.tweetsCount}" />
 					</StackPanel>
 					<StackPanel
 						Orientation="Vertical"
@@ -60,7 +60,7 @@
 						<TextBlock
 							Text="Abonnement : " />
 						<TextBlock
-							Text="{Binding user.abonnementCount}" />
+							Text="{Binding Auser.abonnementCount}" />
 					</StackPanel>
 					<StackPanel
 						Orientation="Vertical"
@@ -68,7 +68,7 @@
 						<TextBlock
 							Text="Abonnés : " />
 						<TextBlock
-							Text="{Binding user.abonnesCount}" />
+							Text="{Binding Auser.abonnesCount}" />
 					</StackPanel>
 				</StackPanel>
 			</StackPanel>

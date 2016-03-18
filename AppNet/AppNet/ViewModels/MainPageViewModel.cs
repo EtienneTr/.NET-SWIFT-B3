@@ -58,7 +58,7 @@ namespace AppNet.ViewModels
         	
             if (!string.IsNullOrEmpty(_codeinput))
             {
-                var userCredentials = CredentialsCreator.GetCredentialsFromVerifierCode(Codeinput, Connexion.getInstance().GetAppCredentials());
+                var userCredentials = CredentialsCreator.GetCredentialsFromVerifierCode(Codeinput, Connexion.GetAppCredentials());
                 Auth.SetCredentials(userCredentials);
                 
                 if (userCredentials != null)

@@ -7,14 +7,13 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Core;
+using Windows.UI.Xaml;
+using Tweetinvi;
+using AppNet.ViewModels;
+using AppNet.Model;
+using Windows.UI.Xaml.Navigation;
 
 namespace AppNet.Views
 {
@@ -27,6 +26,15 @@ namespace AppNet.Views
 		{
 			InitializeComponent();
 		}
+		
+		protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+ 
+        	var url = CredentialsCreator.GetAuthorizationURL(Connexion.GetAppCredentials());
+
+            this.TwitterPin.Source = url;
+        	
+        }
 		
 	}
 }
