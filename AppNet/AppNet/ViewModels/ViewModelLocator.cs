@@ -17,7 +17,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.ComponentModel;
 
-
 namespace AppNet.ViewModels
 {
 	public class ViewModelLocator

@@ -33,7 +33,7 @@ namespace AppNet.Views
 	{
 		public CodeUserView()
 		{
-			InitializeComponent();
+            InitializeComponent();
 		}
 		
 		protected override void OnNavigatedTo(NavigationEventArgs e)
