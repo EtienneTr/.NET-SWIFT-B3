@@ -11,12 +11,6 @@
     DataContext="{Binding Source={StaticResource Locator}, Path=LoggedUser}">
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition
-				Width="130" />
-            <ColumnDefinition
-				Width="3*" />
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
             <RowDefinition Height="300" />
@@ -24,7 +18,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Grid.Column="1" Margin="20,0,0,0">
+        <StackPanel Grid.Row="0" Margin="20,0,0,0">
             <TextBlock HorizontalAlignment="Center"
 					    VerticalAlignment="Center"
 					Text="{Binding userNameFormat}"
@@ -37,11 +31,11 @@
         </StackPanel>
 
         <StackPanel
-                Grid.Column="1"
+                
                 Grid.Row="1"
-				Orientation="Horizontal"
+				Orientation="Horizontal" HorizontalAlignment="Center"
 				>
-            <Canvas Height="300" Width="800" Margin="10,10,0,0" HorizontalAlignment="Center">
+            <Canvas Height="300" Width="800" HorizontalAlignment="Center">
                 <Canvas.Background>
                     <ImageBrush ImageSource="{Binding Auser.ProfileBannerURL}" Opacity="0.5"></ImageBrush>
                 </Canvas.Background>
@@ -61,13 +55,26 @@
                     </Grid>
                 </Border>
             </Canvas>
-
+            
         </StackPanel>
 
         <StackPanel
 			Orientation="Vertical"
 			Grid.Row="2"
-			Grid.Column="1">
+			>
+            <Button
+				Command="{Binding Profil}"
+				Content="Profil"
+				HorizontalAlignment="Center"
+				Margin="10"
+				Width="60"
+				Height="25" />
+            <TextBox
+						Text="{Binding StringPostTweet, Mode=TwoWay}"
+						MaxLength="140"
+						Height="50"
+                        Margin="10,0,0,0"
+						Width="300" PlaceholderText="Write yout tweet" />
             <Button
 				Command="{Binding sendTweet}"
 				Content="Tweet !"
@@ -80,16 +87,13 @@
             <StackPanel
 					Orientation="Horizontal" HorizontalAlignment="Center">
                     <TextBox
-						Text="{Binding searchInput, Mode=TwoWay}"
+						Text="{Binding SearchInput, Mode=TwoWay}"
 						MaxWidth="150"
 						Height="24"
 						Width="88" />
-                    <Button
-						Command="{Binding ISearch}">
-                        <Image
-							Source="ms-appx:///Assets/search.png"></Image>
-                    </Button>
-                </StackPanel>
+                <Button
+						Command="{Binding ISearch}" Content="Search"/>
+            </StackPanel>
                 <!-- <Button
 					Content="Se deconnecter"
 					Command="{Binding deco_click}"
@@ -99,18 +103,18 @@
         </StackPanel>
         <ScrollViewer
 			HorizontalContentAlignment="Stretch"
-			Grid.Column="1"
+			
 			Grid.Row="3"
 			HorizontalAlignment="Stretch"
 			Height="400"
-			VerticalAlignment="Bottom"
-			Margin="5,0,4,5">
+			VerticalAlignment="Top">
             <ListView
+                Name="TweetView"
 				ItemsSource="{Binding TimeLineTweets}"
 				ScrollViewer.HorizontalScrollMode="Auto" 
 				ScrollViewer.HorizontalScrollBarVisibility="Auto"
 				Width="610"
-				Height="390">
+				Height="500">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Vertical">
@@ -195,7 +199,7 @@
                                 <Button
 									Name="Delete"
 									Margin="2"
-									Command="{Binding Source={StaticResource Locator}, Path=User.Delete}"
+                                    Command="{Binding Source={StaticResource Locator}, Path=DataContext.Delete}"
 									CommandParameter="{Binding Id}">
                                     <StackPanel
 										Orientation="Horizontal">

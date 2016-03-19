@@ -76,6 +76,24 @@ namespace DOTNet.ViewModels
             return timeLineListe;
         }
 
+        private RelayCommand _profil;
+        public RelayCommand Profil
+        {
+            get
+            {
+                if (_profil == null)
+                    _profil = new RelayCommand(ProfilTimeLine);
+                return _profil;
+            }
+        }
+
+        public void ProfilTimeLine()
+        {
+            this.Auser = (Tweetinvi.Logic.User)User.GetAuthenticatedUser();
+            this.TimeLineTweets = getTimeLine(this.Auser);
+
+            this.MediasTweet = new List<Tweetinvi.Core.Interfaces.DTO.IMedia>();
+        }
 
 
         private string _searchInput;
@@ -105,17 +123,17 @@ namespace DOTNet.ViewModels
 
         public void SearchInTwitter()
         {
-            if (!string.IsNullOrEmpty(this._searchInput))
+            if (!string.IsNullOrEmpty(this.SearchInput))
             {
 
-                var tweets = Search.SearchTweets(this._searchInput);
+                var tweets = Search.SearchTweets(this.SearchInput);
                 var timeLineCollection = new ObservableCollection<Tweetinvi.Logic.Tweet>();
                 foreach (var tweet in tweets)
                 {
                     timeLineCollection.Add((Tweetinvi.Logic.Tweet)tweet);
                 }
                 this.TimeLineTweets = timeLineCollection;
-                this._searchInput = "";
+                this.SearchInput = "";
             }
             else if (!string.IsNullOrEmpty(this._searchInput))
             {
@@ -144,46 +162,11 @@ namespace DOTNet.ViewModels
 
         public void EnvoyerTweet()
         {
-            var Tweetmsg = new ContentDialog();
-
-            var stackPanel = new StackPanel();
-
-            var textBox = new TextBox();
-            textBox.MaxLength = 140;
-            stackPanel.Children.Add(textBox);
-
-            var textBlock = new TextBlock
-            {
-                Text = this.StringPostTweet
-            };
-            var binding = new Binding
-            {
-                Source = this,
-                Path = new PropertyPath("YourTweet")
-            };
-
-            var buttonAddImage = new Button
-            {
-                Command = _addImage,
-                Content = "Ajouter un fichier",
-                VerticalAlignment = VerticalAlignment.Bottom,
-                HorizontalAlignment = HorizontalAlignment.Left
-            };
-            stackPanel.Children.Add(buttonAddImage);
-            Tweetmsg.Content = stackPanel;
-            Tweetmsg.PrimaryButtonText = "DO IT!";
-            Tweetmsg.SecondaryButtonText = "Annuler";
-
-            var medias = this.MediasTweet;
-            if (!string.IsNullOrEmpty(textBox.Text))
-            {
-                var tweet = Tweetinvi.Tweet.PublishTweet(textBox.Text, new PublishTweetOptionalParameters { Medias = medias });
-                this.MediasTweet = new List<IMedia>();
-            }
-            else
-            {
-                this.EnvoyerTweet();
-            }
+            //tweet
+           var tweet = Tweetinvi.Tweet.PublishTweet(StringPostTweet);
+            TimeLineTweets.Insert(0, (Tweetinvi.Logic.Tweet)tweet);
+            StringPostTweet = "";
+    
         }
 
         private RelayCommand _addImage;

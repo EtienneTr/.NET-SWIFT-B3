@@ -282,11 +282,3 @@ C:\Users\Etienne\Documents\GitHub\.NET-SWIFT-B3\DOTNet\DOTNet\obj\x64\Debug\Gala
 C:\Users\Etienne\Documents\GitHub\.NET-SWIFT-B3\DOTNet\DOTNet\obj\x64\Debug\Template10Library.pri.xml
 C:\Users\Etienne\Documents\GitHub\.NET-SWIFT-B3\DOTNet\DOTNet\obj\x64\Debug\ProjectArchitectures.txt
 C:\Users\Etienne\Documents\GitHub\.NET-SWIFT-B3\DOTNet\DOTNet\obj\x64\Debug\DOTNet.csprojResolveAssemblyReference.cache
-C:\Users\Etienne\Documents\GitHub\.NET-SWIFT-B3\DOTNet\DOTNet\obj\x64\Debug\Autofac\layout.resfiles
-C:\Users\Etienne\Documents\GitHub\.NET-SWIFT-B3\DOTNet\DOTNet\obj\x64\Debug\Autofac\layout.resfiles.intermediate
-C:\Users\Etienne\Documents\GitHub\.NET-SWIFT-B3\DOTNet\DOTNet\obj\x64\Debug\Autofac\Resources.resfiles
-C:\Users\Etienne\Documents\GitHub\.NET-SWIFT-B3\DOTNet\DOTNet\obj\x64\Debug\Autofac\Resources.resfiles.intermediate
-C:\Users\Etienne\Documents\GitHub\.NET-SWIFT-B3\DOTNet\DOTNet\obj\x64\Debug\Autofac\pri.resfiles
-C:\Users\Etienne\Documents\GitHub\.NET-SWIFT-B3\DOTNet\DOTNet\obj\x64\Debug\Autofac\pri.resfiles.intermediate
-C:\Users\Etienne\Documents\GitHub\.NET-SWIFT-B3\DOTNet\DOTNet\obj\x64\Debug\Autofac\priconfig.xml
-C:\Users\Etienne\Documents\GitHub\.NET-SWIFT-B3\DOTNet\DOTNet\obj\x64\Debug\Autofac\priconfig.xml.intermediate

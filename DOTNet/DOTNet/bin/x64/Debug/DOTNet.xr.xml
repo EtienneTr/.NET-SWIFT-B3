@@ -4,9 +4,10 @@
     <RootPropertyPathName Name="TwitterURL" />
     <RootPropertyPathName Name="LoggedUser" />
     <RootPropertyPathName Name="TimeLineTweets" />
-    <RootPropertyPathName Name="User" />
+    <RootPropertyPathName Name="DataContext" />
     <RootPropertyPathName Name="Delete" />
     <RootPropertyPathName Name="Id" />
+    <RootPropertyPathName Name="User" />
     <RootPropertyPathName Name="Like" />
     <RootPropertyPathName Name="LikeCount" />
     <RootPropertyPathName Name="Retweet" />
@@ -20,8 +21,10 @@
     <RootPropertyPathName Name="Name" />
     <RootPropertyPathName Name="ProfileImageUrl" />
     <RootPropertyPathName Name="ISearch" />
-    <RootPropertyPathName Name="searchInput" />
+    <RootPropertyPathName Name="SearchInput" />
     <RootPropertyPathName Name="sendTweet" />
+    <RootPropertyPathName Name="StringPostTweet" />
+    <RootPropertyPathName Name="Profil" />
     <RootPropertyPathName Name="Auser" />
     <RootPropertyPathName Name="ProfileBannerURL" />
     <RootPropertyPathName Name="ProfileImageUrlFullSize" />
@@ -45,12 +48,10 @@
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Grid">
       <RootProperty Name="Children" />
-      <RootProperty Name="ColumnDefinitions" />
       <RootProperty Name="RowDefinitions" />
+      <RootProperty Name="ColumnDefinitions" />
       <RootMethod Name="GetRow" />
       <RootMethod Name="SetRow" />
-      <RootMethod Name="GetColumn" />
-      <RootMethod Name="SetColumn" />
       <RootMethod Name="GetColumnSpan" />
       <RootMethod Name="SetColumnSpan" />
     </RootType>
@@ -66,9 +67,6 @@
     </RootType>
     <RootType FullName="DOTNet.Views.CodeUserView" />
     <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.StaticResourceExtension" />
-    <RootType FullName="Windows.UI.Xaml.Controls.ColumnDefinition">
-      <RootProperty Name="Width" />
-    </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.RowDefinition">
       <RootProperty Name="Height" />
     </RootType>
@@ -85,7 +83,6 @@
       <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="Height" />
       <RootProperty Name="VerticalAlignment" />
-      <RootProperty Name="Margin" />
       <RootProperty Name="Content" />
       <RootMethod Name="GetHorizontalScrollMode" />
       <RootMethod Name="SetHorizontalScrollMode" />
@@ -93,11 +90,11 @@
       <RootMethod Name="SetHorizontalScrollBarVisibility" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.ListView">
+      <RootProperty Name="Name" />
       <RootProperty Name="ItemsSource" />
       <RootProperty Name="Width" />
       <RootProperty Name="Height" />
       <RootProperty Name="ItemTemplate" />
-      <RootProperty Name="Name" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.DataTemplate">
       <RootProperty Name="Template" />
@@ -136,17 +133,18 @@
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.TextBox">
       <RootProperty Name="Text" />
-      <RootProperty Name="MaxWidth" />
-      <RootProperty Name="Height" />
-      <RootProperty Name="Width" />
-      <RootProperty Name="Name" />
-      <RootProperty Name="Margin" />
       <RootProperty Name="MaxLength" />
+      <RootProperty Name="Height" />
+      <RootProperty Name="Margin" />
+      <RootProperty Name="Width" />
+      <RootProperty Name="PlaceholderText" />
+      <RootProperty Name="MaxWidth" />
+      <RootProperty Name="Name" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Canvas">
       <RootProperty Name="Height" />
       <RootProperty Name="Width" />
-      <RootProperty Name="Margin" />
+      <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="Background" />
       <RootProperty Name="Children" />
     </RootType>
@@ -165,6 +163,9 @@
       <RootProperty Name="Background" />
     </RootType>
     <RootType FullName="DOTNet.Views.LoggedUserView" />
+    <RootType FullName="Windows.UI.Xaml.Controls.ColumnDefinition">
+      <RootProperty Name="Width" />
+    </RootType>
     <RootType FullName="DOTNet.Views.MainPage" />
   </Roots.RootTypes>
 </Roots>
