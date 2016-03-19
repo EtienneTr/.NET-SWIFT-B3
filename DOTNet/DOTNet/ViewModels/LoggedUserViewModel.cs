@@ -41,6 +41,18 @@ namespace DOTNet.ViewModels
 
         }
 
+        public String userNameFormat
+        {
+            get { return "Bienvenue " + Auser.Name; }
+        }
+
+
+        public String userScreenNameFormat
+        {
+            get { return "@" + Auser.ScreenName; }
+           
+        }
+
         private ObservableCollection<Tweetinvi.Logic.Tweet> _timeLineTweets;
 
         public ObservableCollection<Tweetinvi.Logic.Tweet> TimeLineTweets

@@ -1,0 +1,1 @@
+C:\Users\Etienne\Documents\GitHub\.NET-SWIFT-B3\DOTNet\DOTNet\DOTNet.csproj;x64
